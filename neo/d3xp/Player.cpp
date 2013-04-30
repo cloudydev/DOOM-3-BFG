@@ -7227,7 +7227,7 @@ void idPlayer::RunPhysics_RemoteClientCorrection() {
 		const float serverSpeedSquared = physicsObj.GetLinearVelocity().LengthSqr();
 		const float clientSpeedSquared = usercmd.speedSquared;
 
-		if ( std::abs( serverSpeedSquared - clientSpeedSquared ) > pm_clientAuthoritative_minSpeedSquared.GetFloat() ) {
+		if ( fabsf( serverSpeedSquared - clientSpeedSquared ) > pm_clientAuthoritative_minSpeedSquared.GetFloat() ) { // jeremiah sypult: was std::abs
 			idVec3 normalizedVelocity = physicsObj.GetLinearVelocity();
 
 			const float VELOCITY_EPSILON = 0.001f;
