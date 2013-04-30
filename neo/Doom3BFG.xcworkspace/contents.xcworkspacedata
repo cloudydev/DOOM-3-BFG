@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:../doomclassic/doomclassic.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:../doomclassic/timidity/timidity.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:idLib.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:game-d3xp.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Doom3BFG.xcodeproj">
+   </FileRef>
+</Workspace>
