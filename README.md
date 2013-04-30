@@ -1,10 +1,34 @@
-Doom 3 BFG Edition GPL Source Code
+Doom 3 BFG Edition GPL Source Code - Mac OS X
 ==================================
 
 This file contains the following sections:
 
+MAC OS X NOTES
 GENERAL NOTES
 LICENSE
+
+MAC OS X NOTES
+==============
+
+Xcode should build each target without any errors. I've done some work to
+get the engine up and running on Mac OS X, but there are some issues.
+
+Issues:
+-------
+
+Renderer: Mac OS X only supports OpenGL Legacy 2.1 or 3.2 Core profiles.
+DOOM-3-BFG seems to be built to require a 3.2 compatibility profile with
+specific extensions which may not be available on Mac OS X.
+
+http://developer.apple.com/graphicsimaging/opengl/capabilities/
+
+I can only guess that making use of any optimizations since 'vanilla DOOM3' will require losing
+some features by rewriting for the Legacy profile or tightening up for the 3.2 Core profile.
+
+Audio: The sound engine is currently disabled on Mac OS X with a 'null' implementation.
+
+Multiplayer: Networking support is unknown.
+
 
 GENERAL NOTES
 =============
@@ -21,11 +45,17 @@ Note that Doom 3 BFG Edition is available from the Steam store at
 http://store.steampowered.com/app/208200/
 
 
+Compiling on Mac OS X:
+-------------------
+
+An Xcode workspace is provided in neo/Doom3BFG.xcworkspace.
+
+
 Compiling on win32:
 -------------------
 
 A project file for Microsoft Visual Studio 2010 is provided in neo\doom3.sln
-We expect the solution file is compatible with the Express releases
+The project and solution files have been made compatible with the Express releases
 
 You will need the Microsoft DirectX SDK installed as well.
 If it does not reside in "C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)"
@@ -50,16 +80,6 @@ Back End Rendering of Stencil Shadows:
 
 The Doom 3 BFG Edition GPL Source Code release does not include functionality enabling rendering
 of stencil shadows via the "depth fail" method, a functionality commonly known as "Carmack's Reverse".
-
-
-Other platforms, updated source code, security issues:
-------------------------------------------------------
-
-If you have obtained this source code several weeks after the time of release,
-it is likely that you can find modified and improved versions of the engine in
-various open source projects across the internet.
-
-Depending what is your interest with the source code, those may be a better starting point.
 
 
 LICENSE
