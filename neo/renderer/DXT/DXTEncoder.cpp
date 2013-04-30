@@ -968,6 +968,7 @@ NormalDistanceDXT1
 ========================
 */
 int NormalDistanceDXT1( const int *vector, const int *normalized ) {
+#if defined( _WIN32 )
 	int result;
 	__asm {
 		mov			esi, vector
@@ -1007,6 +1008,10 @@ int NormalDistanceDXT1( const int *vector, const int *normalized ) {
 		movd		result, xmm0
 	}
 	return result;
+#else
+#warning implement NormalDistanceDXT1
+	return 0;
+#endif // _WIN32
 }
 
 /*
@@ -1015,6 +1020,7 @@ NormalDistanceDXT5
 ========================
 */
 int NormalDistanceDXT5( const int *vector, const int *normalized ) {
+#if defined( _WIN32 )
 	int result;
 	__asm {
 		mov			esi, vector
@@ -1064,6 +1070,10 @@ int NormalDistanceDXT5( const int *vector, const int *normalized ) {
 		movd		result, xmm0
 	}
 	return result;
+#else
+#warning implement NormalDistanceDXT5
+	return 0;
+#endif // _WIN32
 }
 
 /*

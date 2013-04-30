@@ -32,9 +32,19 @@ If you have questions concerning this license or the applicable additional terms
 #ifndef __QGL_H__
 #define __QGL_H__
 
-
+#if defined( _WIN32 )
 #include <gl/gl.h>
+#endif // _WIN32
 
+#if defined( __MACH__ )
+// prohibit mac os x gl.h from loading glext.h
+#define GL_GLEXT_LEGACY
+#include <OpenGL/gl.h>
+//
+//#define GL_DO_NOT_WARN_IF_MULTI_GL_VERSION_HEADERS_INCLUDED
+//#include <OpenGL/gl3.h>
+
+#endif // __MACH__
 
 #ifndef APIENTRY
 #define APIENTRY
@@ -62,6 +72,131 @@ GLExtension_t GLimp_ExtensionPointer( const char *name );
 #ifdef __cplusplus
 	}
 #endif
+
+//
+// manually define the necessary function pointers for Mac OS X
+// TODO: figure out why glext.h does not define them? something to do with
+// various GL_VERSION_* and GL_ARB_* defines?
+//
+#if defined( __MACH__ )
+
+#ifndef APIENTRYP
+#define APIENTRYP APIENTRY *
+#endif
+
+// GL_ARB_multitexture
+typedef void (APIENTRYP PFNGLACTIVETEXTUREPROC) (GLenum texture);
+typedef void (APIENTRYP PFNGLCLIENTACTIVETEXTUREPROC) (GLenum texture);
+
+// GL_EXT_direct_state_access
+typedef void (APIENTRYP PFNGLBINDMULTITEXTUREEXTPROC) (GLenum texunit, GLenum target, GLuint texture);
+
+// GL_ARB_texture_compression
+typedef void (APIENTRYP PFNGLCOMPRESSEDTEXIMAGE2DARBPROC) (GLenum target, GLint level, GLenum internalformat, GLsizei width, GLsizei height, GLint border, GLsizei imageSize, const GLvoid *data);
+typedef void (APIENTRYP PFNGLCOMPRESSEDTEXSUBIMAGE2DARBPROC) (GLenum target, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLsizei imageSize, const GLvoid *data);
+typedef void (APIENTRYP PFNGLGETCOMPRESSEDTEXIMAGEARBPROC) (GLenum target, GLint level, GLvoid *img);
+
+// GL_ARB_vertex_buffer_object
+typedef void (APIENTRYP PFNGLBINDBUFFERARBPROC) (GLenum target, GLuint buffer);
+typedef void (APIENTRYP PFNGLBINDBUFFERRANGEPROC) (GLenum target, GLuint index, GLuint buffer, GLintptr offset, GLsizeiptr size);
+typedef void (APIENTRYP PFNGLDELETEBUFFERSARBPROC) (GLsizei n, const GLuint *buffers);
+typedef void (APIENTRYP PFNGLGENBUFFERSARBPROC) (GLsizei n, GLuint *buffers);
+typedef GLboolean (APIENTRYP PFNGLISBUFFERARBPROC) (GLuint buffer);
+typedef void (APIENTRYP PFNGLBUFFERDATAARBPROC) (GLenum target, GLsizeiptrARB size, const GLvoid *data, GLenum usage);
+typedef void (APIENTRYP PFNGLBUFFERSUBDATAARBPROC) (GLenum target, GLintptrARB offset, GLsizeiptrARB size, const GLvoid *data);
+typedef void (APIENTRYP PFNGLGETBUFFERSUBDATAARBPROC) (GLenum target, GLintptrARB offset, GLsizeiptrARB size, GLvoid *data);
+typedef GLvoid* (APIENTRYP PFNGLMAPBUFFERARBPROC) (GLenum target, GLenum access);
+typedef GLboolean (APIENTRYP PFNGLUNMAPBUFFERARBPROC) (GLenum target);
+typedef void (APIENTRYP PFNGLGETBUFFERPARAMETERIVARBPROC) (GLenum target, GLenum pname, GLint *params);
+typedef void (APIENTRYP PFNGLGETBUFFERPOINTERVARBPROC) (GLenum target, GLenum pname, GLvoid* *params);
+
+// GL_ARB_map_buffer_range
+typedef GLvoid* (APIENTRYP PFNGLMAPBUFFERRANGEPROC) (GLenum target, GLintptr offset, GLsizeiptr length, GLbitfield access);
+
+// GL_ARB_draw_elements_base_vertex
+typedef void (APIENTRYP PFNGLDRAWELEMENTSBASEVERTEXPROC) (GLenum mode, GLsizei count, GLenum type, const GLvoid *indices, GLint basevertex);
+
+// GL_ARB_vertex_array_object
+typedef void (APIENTRYP PFNGLGENVERTEXARRAYSPROC) (GLsizei n, GLuint *arrays);
+typedef void (APIENTRYP PFNGLBINDVERTEXARRAYPROC) (GLuint array);
+typedef void (APIENTRYP PFNGLDELETEVERTEXARRAYSPROC) (GLsizei n, const GLuint *arrays);
+
+// GL_ARB_vertex_program / GL_ARB_fragment_program
+typedef void (APIENTRYP PFNGLVERTEXATTRIBPOINTERARBPROC) (GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid *pointer);
+typedef void (APIENTRYP PFNGLENABLEVERTEXATTRIBARRAYARBPROC) (GLuint index);
+typedef void (APIENTRYP PFNGLDISABLEVERTEXATTRIBARRAYARBPROC) (GLuint index);
+typedef void (APIENTRYP PFNGLPROGRAMSTRINGARBPROC) (GLenum target, GLenum format, GLsizei len, const GLvoid *string);
+typedef void (APIENTRYP PFNGLBINDPROGRAMARBPROC) (GLenum target, GLuint program);
+typedef void (APIENTRYP PFNGLGENPROGRAMSARBPROC) (GLsizei n, GLuint *programs);
+typedef void (APIENTRYP PFNGLDELETEPROGRAMSARBPROC) (GLsizei n, const GLuint *programs);
+typedef void (APIENTRYP PFNGLPROGRAMENVPARAMETER4FVARBPROC) (GLenum target, GLuint index, const GLfloat *params);
+typedef void (APIENTRYP PFNGLPROGRAMLOCALPARAMETER4FVARBPROC) (GLenum target, GLuint index, const GLfloat *params);
+
+// GLSL / OpenGL 2.0
+typedef GLuint (APIENTRYP PFNGLCREATESHADERPROC) (GLenum type);
+typedef void (APIENTRYP PFNGLDELETESHADERPROC) (GLuint shader);
+#ifndef PFNGLSHADERSOURCEPROC
+typedef void (APIENTRYP PFNGLSHADERSOURCEPROC) (GLuint shader, GLsizei count, const GLchar* *string, const GLint *length);
+#endif
+typedef void (APIENTRYP PFNGLCOMPILESHADERPROC) (GLuint shader);
+typedef void (APIENTRYP PFNGLGETSHADERIVPROC) (GLuint shader, GLenum pname, GLint *params);
+typedef void (APIENTRYP PFNGLGETSHADERINFOLOGPROC) (GLuint shader, GLsizei bufSize, GLsizei *length, GLchar *infoLog);
+typedef GLuint (APIENTRYP PFNGLCREATEPROGRAMPROC) (void);
+typedef void (APIENTRYP PFNGLDELETEPROGRAMPROC) (GLuint program);
+typedef void (APIENTRYP PFNGLATTACHSHADERPROC) (GLuint program, GLuint shader);
+typedef void (APIENTRYP PFNGLDETACHSHADERPROC) (GLuint program, GLuint shader);
+typedef void (APIENTRYP PFNGLLINKPROGRAMPROC) (GLuint program);
+typedef void (APIENTRYP PFNGLUSEPROGRAMPROC) (GLuint program);
+typedef void (APIENTRYP PFNGLGETPROGRAMIVPROC) (GLuint program, GLenum pname, GLint *params);
+typedef void (APIENTRYP PFNGLGETPROGRAMINFOLOGPROC) (GLuint program, GLsizei bufSize, GLsizei *length, GLchar *infoLog);
+
+typedef void (APIENTRYP PFNGLPROGRAMPARAMETERIPROC) (GLuint program, GLenum pname, GLint value);
+typedef void (APIENTRYP PFNGLBINDATTRIBLOCATIONPROC) (GLuint program, GLuint index, const GLchar *name);
+typedef GLint (APIENTRYP PFNGLGETUNIFORMLOCATIONPROC) (GLuint program, const GLchar *name);
+typedef void (APIENTRYP PFNGLUNIFORM1IPROC) (GLint location, GLint v0);
+typedef void (APIENTRYP PFNGLUNIFORM4FVPROC) (GLint location, GLsizei count, const GLfloat *value);
+
+// GL_ARB_uniform_buffer_object
+typedef GLuint (APIENTRYP PFNGLGETUNIFORMBLOCKINDEXPROC) (GLuint program, const GLchar *uniformBlockName);
+typedef void (APIENTRYP PFNGLUNIFORMBLOCKBINDINGPROC) (GLuint program, GLuint uniformBlockIndex, GLuint uniformBlockBinding);
+
+// GL_ATI_separate_stencil / OpenGL 2.0
+typedef void (APIENTRYP PFNGLSTENCILOPSEPARATEATIPROC) (GLenum face, GLenum sfail, GLenum dpfail, GLenum dppass);
+typedef void (APIENTRYP PFNGLSTENCILFUNCSEPARATEATIPROC) (GLenum frontfunc, GLenum backfunc, GLint ref, GLuint mask);
+
+// GL_EXT_depth_bounds_test
+typedef void (APIENTRYP PFNGLDEPTHBOUNDSEXTPROC) (GLclampd zmin, GLclampd zmax);
+
+// GL_ARB_sync
+typedef GLsync (APIENTRYP PFNGLFENCESYNCPROC) (GLenum condition, GLbitfield flags);
+typedef GLboolean (APIENTRYP PFNGLISSYNCPROC) (GLsync sync);
+typedef GLenum (APIENTRYP PFNGLCLIENTWAITSYNCPROC) (GLsync sync, GLbitfield flags, GLuint64 timeout);
+typedef void (APIENTRYP PFNGLDELETESYNCPROC) (GLsync sync);
+
+// GL_ARB_occlusion_query
+typedef void (APIENTRYP PFNGLGENQUERIESARBPROC) (GLsizei n, GLuint *ids);
+typedef void (APIENTRYP PFNGLDELETEQUERIESARBPROC) (GLsizei n, const GLuint *ids);
+typedef GLboolean (APIENTRYP PFNGLISQUERYARBPROC) (GLuint id);
+typedef void (APIENTRYP PFNGLBEGINQUERYARBPROC) (GLenum target, GLuint id);
+typedef void (APIENTRYP PFNGLENDQUERYARBPROC) (GLenum target);
+typedef void (APIENTRYP PFNGLGETQUERYIVARBPROC) (GLenum target, GLenum pname, GLint *params);
+typedef void (APIENTRYP PFNGLGETQUERYOBJECTIVARBPROC) (GLuint id, GLenum pname, GLint *params);
+typedef void (APIENTRYP PFNGLGETQUERYOBJECTUIVARBPROC) (GLuint id, GLenum pname, GLuint *params);
+
+// GL_ARB_timer_query / GL_EXT_timer_query
+typedef void (APIENTRYP PFNGLGETQUERYOBJECTUI64VEXTPROC) (GLuint id, GLenum pname, GLuint64EXT *params);
+
+// GL_ARB_debug_output
+typedef void (APIENTRY *GLDEBUGPROCARB)(GLenum source,GLenum type,GLuint id,GLenum severity,GLsizei length,const GLchar *message,GLvoid *userParam);
+
+typedef void (APIENTRYP PFNGLDEBUGMESSAGECONTROLARBPROC) (GLenum source, GLenum type, GLenum severity, GLsizei count, const GLuint *ids, GLboolean enabled);
+typedef void (APIENTRYP PFNGLDEBUGMESSAGEINSERTARBPROC) (GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar *buf);
+typedef void (APIENTRYP PFNGLDEBUGMESSAGECALLBACKARBPROC) (GLDEBUGPROCARB callback, const GLvoid *userParam);
+typedef GLuint (APIENTRYP PFNGLGETDEBUGMESSAGELOGARBPROC) (GLuint count, GLsizei bufsize, GLenum *sources, GLenum *types, GLuint *ids, GLenum *severities, GLsizei *lengths, GLchar *messageLog);
+
+typedef const GLubyte * (APIENTRYP PFNGLGETSTRINGIPROC) (GLenum name, GLuint index);
+
+#endif // __MACH__
 
 // GL_EXT_direct_state_access
 extern PFNGLBINDMULTITEXTUREEXTPROC			qglBindMultiTextureEXT;
@@ -170,7 +305,112 @@ extern PFNGLGETDEBUGMESSAGELOGARBPROC		qglGetDebugMessageLogARB;
 #if defined( __APPLE__ ) || defined( ID_GL_HARDLINK )
 
 #include "qgl_linked.h"
+#if 0
+// GL_ARB_multitexture
+#define qglActiveTextureARB				glActiveTextureARB
+#define qglClientActiveTextureARB		glClientActiveTextureARB
 
+// GL_EXT_direct_state_access
+#define qglBindMultiTextureEXT			glBindMultiTextureEXT
+
+// GL_ARB_texture_compression
+#define qglCompressedTexImage2DARB		glCompressedTexImage2DARB
+#define qglCompressedTexSubImage2DARB	glCompressedTexSubImage2DARB
+#define qglGetCompressedTexImageARB		glGetCompressedTexImageARB
+
+// GL_ARB_vertex_buffer_object
+#define qglBindBufferARB				glBindBufferARB
+#define qglBindBufferRange				glBindBufferRange
+#define qglDeleteBuffersARB				glDeleteBuffersARB
+#define qglGenBuffersARB				glGenBuffersARB
+#define qglIsBufferARB					glIsBufferARB
+#define qglBufferDataARB				glBufferDataARB
+#define qglBufferSubDataARB				glBufferSubDataARB
+#define qglGetBufferSubDataARB			glGetBufferSubDataARB
+#define qglMapBufferARB					glMapBufferARB
+#define qglUnmapBufferARB				glUnmapBufferARB
+#define qglGetBufferParameterivARB		glGetBufferParameterivARB
+#define qglGetBufferPointervARB			glGetBufferPointervARB
+
+// GL_ARB_map_buffer_Range
+#define qglMapBufferRange				glMapBufferRange
+
+// GL_ARB_draw_elements_base_vertex
+#define qglDrawElementsBaseVertex		glDrawElementsBaseVertex
+
+// GL_ARB_vertex_array_object
+#define qglGenVertexArrays				glGenVertexArrays
+#define qglBindVertexArray				glBindVertexArray
+#define qglDeleteVertexArrays			glDeleteVertexArrays
+
+// GL_ARB_vertex_program / GL_ARB_fragment_program
+#define qglVertexAttribPointerARB		glVertexAttribPointerARB
+#define qglEnableVertexAttribArrayARB	glEnableVertexAttribArrayARB
+#define qglDisableVertexAttribArrayARB	glDisableVertexAttribArrayARB
+#define qglProgramStringARB				glProgramStringARB
+#define qglBindProgramARB				glBindProgramARB
+#define qglGenProgramsARB				glGenProgramsARB
+#define qglDeleteProgramsARB			glDeleteProgramsARB
+#define qglProgramEnvParameter4fvARB	glProgramEnvParameter4fvARB
+#define qglProgramLocalParameter4fvARB	glProgramLocalParameter4fvARB
+
+// GLSL / OpenGL 2.0
+#define qglCreateShader					glCreateShader
+#define qglDeleteShader					glDeleteShader
+#define qglShaderSource					glShaderSource
+#define qglCompileShader				glCompileShader
+#define qglGetShaderiv					glGetShaderiv
+#define qglGetShaderInfoLog				glGetShaderInfoLog
+#define qglCreateProgram				glCreateProgram
+#define qglDeleteProgram				glDeleteProgram
+#define qglAttachShader					glAttachShader
+#define qglDetachShader					glDetachShader
+#define qglLinkProgram					glLinkProgram
+#define qglUseProgram					glUseProgram
+#define qglGetProgramiv					glGetProgramiv
+#define qglGetProgramInfoLog			glGetProgramInfoLog
+#define qglProgramParameteri			glProgramParameteri
+#define qglBindAttribLocation			glBindAttribLocation
+#define qglGetUniformLocation			glGetUniformLocation
+#define qglUniform1i					glUniform1i
+#define qglUniform4fv					glUniform4fv
+
+// GL_ARB_uniform_buffer_object
+#define qglGetUniformBlockIndex			glGetUniformBlockIndex
+#define qglUniformBlockBinding			glUniformBlockBinding
+
+// GL_ATI_separate_stencil / OpenGL 2.0 separate stencil
+#define qglStencilOpSeparate			glStencilOpSeparate
+#define qglStencilFuncSeparate			glStencilFuncSeparate
+
+// GL_EXT_depth_bounds_test
+#define qglDepthBoundsEXT				glDepthBoundsEXT
+
+// GL_ARB_sync
+#define qglFenceSync					glFenceSync
+#define qglIsSync						glIsSync
+#define qglClientWaitSync				glClientWaitSync
+#define qglDeleteSync					glDeleteSync
+
+// GL_ARB_occlusion_query
+#define qglGenQueriesARB				glGenQueriesARB
+#define qglDeleteQueriesARB				glDeleteQueriesARB
+#define qglIsQueryARB					glIsQueryARB
+#define qglBeginQueryARB				glBeginQueryARB
+#define qglEndQueryARB					glEndQueryARB
+#define qglGetQueryivARB				glGetQueryivARB
+#define qglGetQueryObjectivARB			glGetQueryObjectivARB
+#define qglGetQueryObjectuivARB			glGetQueryObjectuivARB
+
+// GL_ARB_timer_query / GL_EXT_timer_query
+#define qglGetQueryObjectui64vEXT		glGetQueryObjectui64vEXT
+
+// GL_ARB_debug_output
+#define qglDebugMessageControlARB		glDebugMessageControlARB
+#define qglDebugMessageInsertARB		glDebugMessageInsertARB
+#define qglDebugMessageCallbackARB		glDebugMessageCallbackARB
+#define qglGetDebugMessageLogARB		glGetDebugMessageLogARB
+#endif
 #else
 
 // windows systems use a function pointer for each call so we can do our log file intercepts
@@ -512,6 +752,7 @@ extern  void ( APIENTRY * qglVertex4sv )(const GLshort *v);
 extern  void ( APIENTRY * qglVertexPointer )(GLint size, GLenum type, GLsizei stride, const GLvoid *pointer);
 extern  void ( APIENTRY * qglViewport )(GLint x, GLint y, GLsizei width, GLsizei height);
 
+#if defined( _WIN32 )
 
 extern  int   ( WINAPI * qwglChoosePixelFormat )(HDC, CONST PIXELFORMATDESCRIPTOR *);
 extern  int   ( WINAPI * qwglDescribePixelFormat) (HDC, int, UINT, LPPIXELFORMATDESCRIPTOR);
@@ -542,8 +783,8 @@ extern int  ( WINAPI * qwglGetLayerPaletteEntries)(HDC, int, int, int,
 extern BOOL ( WINAPI * qwglRealizeLayerPalette)(HDC, int, BOOL);
 extern BOOL ( WINAPI * qwglSwapLayerBuffers)(HDC, UINT);
 
+#endif // _WIN32
 
-
-#endif	// hardlinlk vs dlopen
+#endif // hardlink vs dlopen
 
 #endif
