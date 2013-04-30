@@ -37,7 +37,7 @@ If you have questions concerning this license or the applicable additional terms
 
 ================================================================================================
 */
-
+#if defined( _WIN32 )
 
 #define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS	// prevent auto literal to string conversion
 
@@ -70,6 +70,47 @@ If you have questions concerning this license or the applicable additional terms
 #include <malloc.h>							// no malloc.h on mac or unix
 #include <windows.h>						// for qgl.h
 #undef FindText								// fix namespace pollution
+
+#endif // _WIN32
+
+/*
+================================================================================================
+
+	Mac OS X
+
+================================================================================================
+*/
+#if defined( __MACH__ )
+
+#ifndef _D3SDK
+#ifndef GAME_DLL
+
+#include <netinet/in.h>		/* in_addr */
+#include <net/if.h>
+#include <net/if_dl.h>         // for 'struct sockaddr_dl'
+#include <net/if_types.h>
+#include <arpa/inet.h>         // for inet_ntoa()
+#include <sys/sockio.h>
+
+#endif /* !GAME_DLL */
+#endif /* !_D3SDK */
+
+// needed for intrinsics like _mm_setzero_si28
+#include <mmintrin.h>
+#include <emmintrin.h>
+#include <xmmintrin.h>
+
+#include <stddef.h>
+#include <stdint.h>
+#include <stdlib.h>								// malloc on mac or unix
+
+#include <signal.h>
+#include <pthread.h>
+
+#include <sys/time.h>
+#include <mach/mach_time.h>
+
+#endif // __MACH__
 
 /*
 ================================================================================================

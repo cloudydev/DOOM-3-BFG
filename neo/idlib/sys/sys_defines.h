@@ -35,7 +35,7 @@ If you have questions concerning this license or the applicable additional terms
 
 ================================================================================================
 */
-
+#if defined( _WIN32 )
 
 #define	CPUSTRING						"x86"
 
@@ -46,6 +46,8 @@ If you have questions concerning this license or the applicable additional terms
 #define ALIGNTYPE16						__declspec(align(16))
 #define ALIGNTYPE128					__declspec(align(128))
 #define FORMAT_PRINTF( x )
+
+#define VECTORTYPE16					__declspec(intrin_type) _CRT_ALIGN(16)
 
 #define PATHSEPARATOR_STR				"\\"
 #define PATHSEPARATOR_CHAR				'\\'
@@ -68,31 +70,6 @@ If you have questions concerning this license or the applicable additional terms
 #ifndef WIN32
 	#define WIN32
 #endif
-
-/*
-================================================================================================
-
-Defines and macros usable in all code
-
-================================================================================================
-*/
-
-#define ALIGN( x, a ) ( ( ( x ) + ((a)-1) ) & ~((a)-1) )
-
-#define _alloca16( x )					((void *)ALIGN( (UINT_PTR)_alloca( ALIGN( x, 16 ) + 16 ), 16 ) )
-#define _alloca128( x )					((void *)ALIGN( (UINT_PTR)_alloca( ALIGN( x, 128 ) + 128 ), 128 ) )
-
-#define likely( x )	( x )
-#define unlikely( x )	( x )
-
-// A macro to disallow the copy constructor and operator= functions
-// NOTE: The macro contains "private:" so all members defined after it will be private until
-// public: or protected: is specified.
-#define DISALLOW_COPY_AND_ASSIGN(TypeName)	\
-private:									\
-  TypeName(const TypeName&);				\
-  void operator=(const TypeName&);
-
 
 /*
 ================================================================================================
@@ -145,6 +122,101 @@ bulk of the codebase, so it is the best place for analyze pragmas.
 // The volatile qualifier is to prevent:PVS-Studio warnings like:
 // False	2	4214	V519	The 'ignoredReturnValue' object is assigned values twice successively. Perhaps this is a mistake. Check lines: 545, 547.	Rage	collisionmodelmanager_debug.cpp	547	False
 extern volatile int ignoredReturnValue;
+
+#endif // _WIN32
+
+/*
+================================================================================================
+
+	MACH / Mac OS X
+
+================================================================================================
+*/
+#if defined( __MACH__ )
+
+#if defined( __i386__ )
+#define	CPUSTRING						"x86"
+#elif defined( __x86_64__ )
+#define CPUSTRING						"x86_64"
+#endif // __i386__ __x86_64__
+
+#define	BUILD_STRING					"macosx-" CPUSTRING
+#define BUILD_OS_ID						1
+
+#define ALIGN16( x )					x __attribute__((aligned(16)))
+#define ALIGNTYPE16						__attribute__((aligned(16)))
+#define ALIGNTYPE128					__attribute__((aligned(16)))
+#define VECTORTYPE16					__attribute__((__vector_size__(16)))
+
+#define FORMAT_PRINTF( x )
+
+#define PATHSEPARATOR_STR				"/"
+#define PATHSEPARATOR_CHAR				'/'
+#define NEWLINE							"\n"
+
+#define ID_INLINE						inline
+#define ID_FORCE_INLINE					__inline__
+#define ID_INLINE_EXTERN				extern inline
+#define ID_FORCE_INLINE_EXTERN			extern __inline__
+
+// checking format strings catches a LOT of errors
+#define	VERIFY_FORMAT_STRING			// TODO: jeremiah sypult
+
+#define CALLBACK						// TODO: jeremiah sypult
+
+// We need to inform the compiler that Error() and FatalError() will
+// never return, so any conditions that leeds to them being called are
+// guaranteed to be false in the following code
+#define NO_RETURN						__attribute__((noreturn))
+
+#define _alloca							alloca
+#define _aligned_malloc( x, y )			_mm_malloc( x, y )
+#define _aligned_free( x )				_mm_free( x )
+#define _atoi64( x )					atol( x )
+
+// clock_gettime is not implemented on Mac OS X
+#ifndef CLOCK_REALTIME
+#define CLOCK_REALTIME	0
+#endif
+#ifndef CLOCK_MONOTONIC
+#define CLOCK_MONOTONIC 0
+#endif
+
+// undefine darwin align
+#if defined( ALIGN )
+#undef ALIGN
+#endif // ALIGN
+
+#if defined( DEBUG )
+#define _DEBUG 1
+#endif // DEBUG
+
+#endif // __MACH__
+
+/*
+================================================================================================
+
+Defines and macros usable in all code
+
+================================================================================================
+*/
+
+#define ALIGN( x, a ) ( ( ( x ) + ((a)-1) ) & ~((a)-1) )
+
+#define _alloca16( x )					((void *)ALIGN( (uintptr_t)_alloca( ALIGN( x, 16 ) + 16 ), 16 ) )
+#define _alloca128( x )					((void *)ALIGN( (uintptr_t)_alloca( ALIGN( x, 128 ) + 128 ), 128 ) )
+
+#define likely( x )	( x )
+#define unlikely( x )	( x )
+
+// A macro to disallow the copy constructor and operator= functions
+// NOTE: The macro contains "private:" so all members defined after it will be private until
+// public: or protected: is specified.
+#define DISALLOW_COPY_AND_ASSIGN(TypeName)	\
+private:									\
+  TypeName(const TypeName&);				\
+  void operator=(const TypeName&);
+
 
 #define MAX_TYPE( x )			( ( ( ( 1 << ( ( sizeof( x ) - 1 ) * 8 - 1 ) ) - 1 ) << 8 ) | 255 )
 #define MIN_TYPE( x )			( - MAX_TYPE( x ) - 1 )

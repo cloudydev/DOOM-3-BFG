@@ -103,15 +103,15 @@ ID_INLINE_EXTERN int CACHE_LINE_CLEAR_OVERFLOW_COUNT( int size ) {
 
 // if the pointer is not on a cache line boundary this assumes the cache line the pointer starts in was already cleared
 #define CACHE_LINE_CLEAR_BLOCK( ptr, size )																		\
-	byte * startPtr = (byte *)( ( ( (UINT_PTR) ( ptr ) ) + CACHE_LINE_SIZE - 1 ) & ~( CACHE_LINE_SIZE - 1 ) );	\
-	byte * endPtr = (byte *)( ( (UINT_PTR) ( ptr ) + ( size ) - 1 ) & ~( CACHE_LINE_SIZE - 1 ) );				\
+	byte * startPtr = (byte *)( ( ( (uintptr_t) ( ptr ) ) + CACHE_LINE_SIZE - 1 ) & ~( CACHE_LINE_SIZE - 1 ) );	\
+	byte * endPtr = (byte *)( ( (uintptr_t) ( ptr ) + ( size ) - 1 ) & ~( CACHE_LINE_SIZE - 1 ) );				\
 	for ( ; startPtr <= endPtr; startPtr += CACHE_LINE_SIZE ) {													\
 		ZeroCacheLine( startPtr, 0 );																			\
 	}
 
 #define CACHE_LINE_CLEAR_BLOCK_AND_FLUSH( ptr, size )															\
-	byte * startPtr = (byte *)( ( ( (UINT_PTR) ( ptr ) ) + CACHE_LINE_SIZE - 1 ) & ~( CACHE_LINE_SIZE - 1 ) );	\
-	byte * endPtr = (byte *)( ( (UINT_PTR) ( ptr ) + ( size ) - 1 ) & ~( CACHE_LINE_SIZE - 1 ) );				\
+	byte * startPtr = (byte *)( ( ( (uintptr_t) ( ptr ) ) + CACHE_LINE_SIZE - 1 ) & ~( CACHE_LINE_SIZE - 1 ) );	\
+	byte * endPtr = (byte *)( ( (uintptr_t) ( ptr ) + ( size ) - 1 ) & ~( CACHE_LINE_SIZE - 1 ) );				\
 	for ( ; startPtr <= endPtr; startPtr += CACHE_LINE_SIZE ) {													\
 		ZeroCacheLine( startPtr, 0 );																			\
 		FlushCacheLine( startPtr, 0 );																			\
@@ -136,7 +136,7 @@ ID_INLINE_EXTERN int CACHE_LINE_CLEAR_OVERFLOW_COUNT( int size ) {
 #endif
 
 // make the intrinsics "type unsafe"
-typedef union __declspec(intrin_type) _CRT_ALIGN(16) __m128c {
+typedef union VECTORTYPE16 __m128c {
 				__m128c() {}
 				__m128c( __m128 f ) { m128 = f; }
 				__m128c( __m128i i ) { m128i = i; }

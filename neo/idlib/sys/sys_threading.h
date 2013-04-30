@@ -37,7 +37,7 @@ If you have questions concerning this license or the applicable additional terms
 
 ================================================================================================
 */
-
+#if defined( _WIN32 )
 	typedef CRITICAL_SECTION		mutexHandle_t;
 	typedef HANDLE					signalHandle_t;
 	typedef LONG					interlockedInt_t;
@@ -47,8 +47,24 @@ If you have questions concerning this license or the applicable additional terms
 	// MemoryBarrier() inserts and CPU instruction that keeps the CPU from reordering reads and writes.
 	#pragma intrinsic(_ReadWriteBarrier)
 	#define SYS_MEMORYBARRIER		_ReadWriteBarrier(); MemoryBarrier()
+#endif // _WIN32
 
+#if defined( __MACH__)
+	typedef pthread_mutex_t			mutexHandle_t;
+	// DG: all this stuff is needed to emulate Window's Event API
+	// (CreateEvent(), SetEvent(), WaitForSingleObject(), ...)
+	typedef struct signalHandle_s {
+		pthread_cond_t				cond;
+		pthread_mutex_t				mutex;
+		int							waiting;			// number of threads waiting for a signal
+		bool						manualReset;
+		bool						signaled;			// is it signaled right now?
+	}								signalHandle_t;
+	typedef int						interlockedInt_t;
 
+	// according to http://en.wikipedia.org/wiki/Memory_ordering the following should be equivalent to the stuff above..
+	#define SYS_MEMORYBARRIER		asm volatile("" ::: "memory");__sync_synchronize()
+#endif // __MACH__
 
 
 
@@ -61,7 +77,7 @@ If you have questions concerning this license or the applicable additional terms
 ================================================================================================
 */
 
-
+#if defined( _WIN32 )
 	class idSysThreadLocalStorage {
 	public:
 		idSysThreadLocalStorage() { 
@@ -83,6 +99,31 @@ If you have questions concerning this license or the applicable additional terms
 		}	
 		DWORD	tlsIndex;
 	};
+#endif // _WIN32
+
+#if defined( __MACH__ )
+	class idSysThreadLocalStorage {
+	public:
+		idSysThreadLocalStorage() { 
+			pthread_key_create( &key, NULL );
+		}
+		idSysThreadLocalStorage( const ptrdiff_t &val ) {
+			pthread_key_create( &key, NULL );
+			pthread_setspecific( key, ( const void* ) val );
+		}
+		~idSysThreadLocalStorage() {
+			pthread_key_delete( key );
+		}
+		operator ptrdiff_t() {
+			return (ptrdiff_t)pthread_getspecific( key );
+		}
+		const ptrdiff_t & operator = ( const ptrdiff_t &val ) {
+			pthread_setspecific( key, ( const void* ) val );
+			return val;
+		}	
+		pthread_key_t	key;
+	};
+#endif // __MACH__
 
 #define ID_TLS idSysThreadLocalStorage
 

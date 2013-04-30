@@ -601,6 +601,7 @@ idMath::SinCos
 ========================
 */
 ID_INLINE void idMath::SinCos( float a, float &s, float &c ) {
+#if defined( _WIN32 )
 	_asm {
 		fld		a
 		fsincos
@@ -609,6 +610,12 @@ ID_INLINE void idMath::SinCos( float a, float &s, float &c ) {
 		fstp	dword ptr [ecx]
 		fstp	dword ptr [edx]
 	}
+#else
+#warning implement idMath::SinCos
+	// TODO: jeremiah sypult - this is a total guess
+	s = sinf( a );
+	c = cosf( a );
+#endif // _WIN32
 }
 
 /*

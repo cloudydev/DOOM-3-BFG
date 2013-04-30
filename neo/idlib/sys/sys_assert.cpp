@@ -74,11 +74,17 @@ bool AssertFailed( const char * file, int line, const char * expression ) {
 	}
 
 	idLib::Warning( "ASSERTION FAILED! %s(%d): '%s'", file, line, expression );
-
+#if defined( _WIN32 )
 	if ( IsDebuggerPresent() || com_assertOutOfDebugger.GetBool() ) {
 			__debugbreak();
 	}
-
+#else
+	if ( com_assertOutOfDebugger.GetBool() ) {
+		//int *crash = NULL;
+		//*crash = 0xDEADBEEF;
+		abort();
+	}
+#endif // _WIN32
 	if ( skipThisAssertion ) {
 		skippedAssertion_t * skipped = skippedAssertions.Alloc();
 		skipped->file = file;
