@@ -30,6 +30,16 @@ Audio: The sound engine is currently disabled on Mac OS X with a 'null' implemen
 Multiplayer: Networking support is unknown.
 
 
+Contributions:
+--------------
+
+Robert Beckebans and Daniel Gibson were the first to bring DOOM-3-BFG to Linux. Thanks to their hard work
+I was able to reference & adapt their changes to start work on bringing DOOM-3-BFG to Mac OS X.
+
++ http://github.com/RobertBeckebans/RBDOOM-3-BFG
++ http://github.com/RobertBeckebans/
++ http://github.com/DanielGibson/
+
 GENERAL NOTES
 =============
 
