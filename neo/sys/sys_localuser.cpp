@@ -45,7 +45,7 @@ void idLocalUser::Pump() {
 	// Pump the profile
 	GetProfileMgr().Pump();
 
-	if ( GetProfileMgr().GetProfile() != NULL && GetProfileMgr().GetProfile()->GetState() == idPlayerProfile::IDLE ) {
+	if ( GetProfileMgr().GetProfile() != NULL && GetProfileMgr().GetProfile()->GetState() == idPlayerProfile::IDLE && session->HasAchievementSystem() ) {
 		// Pump achievements
 		if ( syncAchievementsRequested ) {
 			if ( session->GetAchievementSystem().IsInitialized() ) {

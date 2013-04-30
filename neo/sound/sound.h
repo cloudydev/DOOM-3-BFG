@@ -311,10 +311,10 @@ public:
 	// May be called to free memory for level loads
 	virtual void			InitStreamBuffers() = 0;
 	virtual void			FreeStreamBuffers() = 0;
-
+#if defined( _WIN32 )
 	// video playback needs to get this
 	virtual void *			GetIXAudio2() const = 0;
-
+#endif // _WIN32
 	// for the sound level meter window
 	virtual cinData_t		ImageForTime( const int milliseconds, const bool waveform ) = 0;
 

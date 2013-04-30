@@ -85,7 +85,7 @@ float com_engineHz_latched = 60.0f; // Latched version of cvar, updated between 
 int64 com_engineHz_numerator = 100LL * 1000LL;
 int64 com_engineHz_denominator = 100LL * 60LL;
 
-HWND com_hwndMsg = NULL;
+//HWND com_hwndMsg = NULL; // jeremiah sypult - unused, windows only
 
 #ifdef __DOOM_DLL__
 idGame *		game = NULL;

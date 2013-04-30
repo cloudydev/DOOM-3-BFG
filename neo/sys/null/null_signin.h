@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 BFG Edition GPL Source Code
-Copyright (C) 1993-2012 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1993-2012 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 BFG Edition GPL Source Code ("Doom 3 BFG Edition Source Code").  
+This file is part of the Doom 3 BFG Edition GPL Source Code ("Doom 3 BFG Edition Source Code").
 
 Doom 3 BFG Edition Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -25,8 +25,38 @@ If you have questions concerning this license or the applicable additional terms
 
 ===========================================================================
 */
-#pragma hdrstop
-#include "../idlib/precompiled.h"
-#include "tr_local.h"
-#include "../sound/snd_local.h"
+#ifndef __NULL_SIGNIN_H__
+#define __NULL_SIGNIN_H__
 
+#include "null_localuser.h"
+
+/*
+================================================
+idSignInManagerNULL
+================================================
+*/
+class idSignInManagerNULL : public idSignInManagerBase {
+public:
+
+			idSignInManagerNULL() : dlcVersionChecked( false ) {}
+	virtual ~idSignInManagerNULL() {}
+	
+	//==========================================================================================
+	// idSignInManagerBase interface
+	//==========================================================================================
+	virtual void					Pump();
+	virtual void					Shutdown();
+	virtual int						GetNumLocalUsers() const { return localUsers.Num(); }
+	virtual idLocalUser * 			GetLocalUserByIndex( int index ) { return &localUsers[index]; }
+	virtual const idLocalUser *		GetLocalUserByIndex( int index ) const { return &localUsers[index]; }
+	virtual void					RemoveLocalUserByIndex( int index );
+	virtual void					RegisterLocalUser( int inputDevice );		// Register a local user to the passed in controller
+	
+	bool							CreateNewUser( nullUserState_t & state );
+	
+private:
+	idStaticList< idLocalUserNULL, MAX_INPUT_DEVICES >	localUsers;
+	bool												dlcVersionChecked;
+};
+
+#endif

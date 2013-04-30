@@ -82,7 +82,7 @@ static void R_TracePointCullStatic( byte *cullBits, byte &totalOr, const float r
 	const __m128 p3Z = _mm_splat_ps( p3, 2 );
 	const __m128 p3W = _mm_splat_ps( p3, 3 );
 
-	__m128i vecTotalOrInt = { 0, 0, 0, 0 };
+	__m128i vecTotalOrInt = _mm_set_epi32( 0, 0, 0, 0 );
 
 	for ( int i = 0; i < numVerts; ) {
 
@@ -214,7 +214,7 @@ static void R_TracePointCullSkinned( byte *cullBits, byte &totalOr, const float 
 	const __m128 p3Z = _mm_splat_ps( p3, 2 );
 	const __m128 p3W = _mm_splat_ps( p3, 3 );
 
-	__m128i vecTotalOrInt = { 0, 0, 0, 0 };
+	__m128i vecTotalOrInt = _mm_set_epi32( 0, 0, 0, 0 );
 
 	for ( int i = 0; i < numVerts; ) {
 

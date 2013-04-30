@@ -41,11 +41,13 @@ If you have questions concerning this license or the applicable additional terms
 #undef StrCmpN
 #undef StrCmpNI
 #undef StrCmpI
-#include <atlbase.h>
+//#include <atlbase.h> // jeremiah sypult: VS2010 Express
 
 #include <comdef.h>
 #include <comutil.h>
 #include <Wbemidl.h>
+
+#include "win_nanoafx.h" // jeremiah sypult: VS2010 Express
 
 #pragma comment (lib, "wbemuuid.lib")
 

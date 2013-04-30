@@ -294,9 +294,12 @@ void LZWJobInternal( lzwParm_t * parm, unsigned int dmaTag ) {
 	assert( parm->ioData->lzwBytes < parm->ioData->maxlzwMem );
 
 	dmaTag = dmaTag;
-
+#if defined( _WIN32 )
 	ALIGN16( idLZWCompressor lzwCompressor( parm->ioData->lzwData ) );
-
+#else
+#warning implement LZWCompressor Align 16
+	idLZWCompressor lzwCompressor( parm->ioData->lzwData );
+#endif // _WIN32
 	if ( parm->fragmented ) {
 		// This packet was partially written out, we need to continue writing, using previous lzw dictionary values
 		ContinueLZWStream( parm, &lzwCompressor );

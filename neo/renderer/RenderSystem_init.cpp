@@ -31,8 +31,10 @@ If you have questions concerning this license or the applicable additional terms
 
 #include "tr_local.h"
 
+#if defined( _WIN32 )
 // Vista OpenGL wrapper check
 #include "../sys/win32/win_local.h"
+#endif // _WIN32
 
 // DeviceContext bypasses RenderSystem to work directly with this
 idGuiModel * tr_guiModel;
@@ -318,7 +320,7 @@ void APIENTRY glBindMultiTextureEXT( GLenum texunit, GLenum target, GLuint textu
 R_CheckExtension
 =================
 */
-bool R_CheckExtension( char *name ) {
+bool R_CheckExtension( const char *name ) {
 	if ( !strstr( glConfig.extensions_string, name ) ) {
 		common->Printf( "X..%s not found\n", name );
 		return false;
@@ -339,8 +341,12 @@ For ARB_debug_output
 static void CALLBACK DebugCallback(unsigned int source, unsigned int type,
 								   unsigned int id, unsigned int severity, int length, const char * message, void * userParam) {
 	// it probably isn't safe to do an idLib::Printf at this point
+#if defined( _WIN32 )
 	OutputDebugString( message );
 	OutputDebugString( "\n" );
+#else
+	printf( "%s\n", message );
+#endif // _WIN32
 }
 
 /*
@@ -839,7 +845,7 @@ void R_InitOpenGL() {
 
 	// Reset our gamma
 	R_SetColorMappings();
-
+#if defined( _WIN32 )
 	static bool glCheck = false;
 	if ( !glCheck && win32.osversion.dwMajorVersion == 6 ) {
 		glCheck = true;
@@ -859,6 +865,9 @@ void R_InitOpenGL() {
 			}
 		}
 	}
+#else
+#warning implement glCheck
+#endif // _WIN32
 }
 
 /*
@@ -1652,15 +1661,17 @@ void GfxInfo_f( const idCmdArgs &args ) {
 
 	common->Printf( "-------\n" );
 
+#if defined( _WIN32 )
 	// WGL_EXT_swap_interval
-	typedef BOOL (WINAPI * PFNWGLSWAPINTERVALEXTPROC) (int interval);
-	extern	PFNWGLSWAPINTERVALEXTPROC wglSwapIntervalEXT;
+	typedef bool (WINAPI * PFNWGLSWAPINTERVALEXTPROC) (int interval);
+	//extern	PFNWGLSWAPINTERVALEXTPROC wglSwapIntervalEXT;
 
 	if ( r_swapInterval.GetInteger() && wglSwapIntervalEXT != NULL ) {
 		common->Printf( "Forcing swapInterval %i\n", r_swapInterval.GetInteger() );
 	} else {
 		common->Printf( "swapInterval not forced\n" );
 	}
+#endif // _WIN32
 
 	if ( glConfig.stereoPixelFormatAvailable && glConfig.isStereoPixelFormat ) {
 		idLib::Printf( "OpenGl quad buffer stereo pixel format active\n" );

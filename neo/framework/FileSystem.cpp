@@ -414,8 +414,8 @@ idFileSystemLocal::OpenOSFile
 ================
 */
 idFileHandle idFileSystemLocal::OpenOSFile( const char *fileName, fsMode_t mode ) {
-	idFileHandle fp;
-
+#if defined( _WIN32 )
+	idFileHandle fp = INVALID_HANDLE_VALUE;
 
 	DWORD dwAccess = 0;
 	DWORD dwShare = 0;
@@ -437,12 +437,62 @@ idFileHandle idFileSystemLocal::OpenOSFile( const char *fileName, fsMode_t mode 
 		dwShare = FILE_SHARE_READ;
 		dwCreate = OPEN_ALWAYS;
 		dwFlags = FILE_ATTRIBUTE_NORMAL;
-					}
+	}
 
 	fp = CreateFile( fileName, dwAccess, dwShare, NULL, dwCreate, dwFlags, NULL );
 	if ( fp == INVALID_HANDLE_VALUE ) {
 		return NULL;
+	}
+#else
+	idFileHandle fp = NULL;
+
+	if ( mode == FS_WRITE ) {
+		fp = fopen( fileName, "wb" );
+	} else if ( mode == FS_READ ) {
+		fp = fopen( fileName, "rb" );
+	} else if ( mode == FS_APPEND ) {
+		fp = fopen( fileName, "ab" );
+	}
+
+	if ( !fp ) {
+		idStr fpath, entry;
+		idStrList list;
+
+		fpath = fileName;
+		fpath.StripFilename();
+		fpath.StripTrailing( PATHSEPARATOR_CHAR );
+
+		if ( ListOSFiles( fpath, NULL, list ) == -1 ) {
+			return NULL;
+		}
+
+		for ( int i = 0; i < list.Num(); i++ ) {
+			entry = fpath + PATHSEPARATOR_CHAR + list[i];
+
+			if ( !entry.Icmp( fileName ) ) {
+				if ( mode == FS_WRITE ) {
+					fp = fopen( entry, "wb" );
+				} else if ( mode == FS_READ ) {
+					fp = fopen( entry, "rb" );
 				}
+				else if ( mode == FS_APPEND ) {
+					fp = fopen( entry, "ab" );
+				}
+
+				if ( fp ) {
+					if( fs_debug.GetInteger() ) {
+						common->Printf( "idFileSystemLocal::OpenFileRead: changed %s to %s\n", fileName, entry.c_str() );
+					}
+					break;
+				} else {
+					// not supposed to happen if ListOSFiles is doing it's job correctly
+					common->Warning( "idFileSystemLocal::OpenFileRead: fs_caseSensitiveOS 1 could not open %s", entry.c_str() );
+				}
+			}
+		}
+	}
+#endif // _WIN32
+
 	return fp;
 }
 
@@ -452,7 +502,11 @@ idFileSystemLocal::CloseOSFile
 ================
 */
 void idFileSystemLocal::CloseOSFile( idFileHandle o ) {
+#if defined( _WIN32 )
 	::CloseHandle( o );
+#else
+	fclose( o );
+#endif // _WIN32
 }
 
 /*
@@ -461,7 +515,16 @@ idFileSystemLocal::DirectFileLength
 ================
 */
 int idFileSystemLocal::DirectFileLength( idFileHandle o ) {
+#if defined( _WIN32 )
 	return GetFileSize( o, NULL );
+#else
+	long pos = ftell( o );
+	fseek( o, 0, SEEK_END );
+	long end = ftell( o );
+	fseek( o, pos, SEEK_SET );
+
+	return end;
+#endif // _WIN32
 }
 
 /*
@@ -484,7 +547,9 @@ void idFileSystemLocal::CreateOSPath( const char *OSPath ) {
 	}
 
 	idStrStatic< MAX_OSPATH > path( OSPath );
+#if defined( _WIN32 )
 	path.SlashesToBackSlashes();
+#endif // _WIN32
 	for( ofs = &path[ 1 ]; *ofs ; ofs++ ) {
 		if ( *ofs == PATHSEPARATOR_CHAR ) {	
 			// create the directory
@@ -1550,11 +1615,19 @@ void idFileSystemLocal::RemoveFile( const char *relativePath ) {
 
 	if ( fs_basepath.GetString()[0] ) {
 		OSPath = BuildOSPath( fs_basepath.GetString(), gameFolder, relativePath );
+#if defined( _WIN32 )
 		::DeleteFile( OSPath );
+#else
+		remove( OSPath );
+#endif // _WIN32
 	}
 
 	OSPath = BuildOSPath( fs_savepath.GetString(), gameFolder, relativePath );
+#if defined( _WIN32 )
 	::DeleteFile( OSPath );
+#else
+	remove( OSPath );
+#endif // _WIN32
 }
 
 /*
@@ -1611,7 +1684,7 @@ int idFileSystemLocal::ReadFile( const char *relativePath, void **buffer, ID_TIM
 		if ( GetResourceCacheEntry( relativePath, rc ) ) {
 			*timestamp = 0;
 			size = rc.length;
-		} 
+		}
 		return size;
 	}
 
@@ -1753,7 +1826,7 @@ bool idFileSystemLocal::RenameFile( const char * relativePath, const char * newN
 
 	idStr oldOSPath = BuildOSPath( path, gameFolder, relativePath );
 	idStr newOSPath = BuildOSPath( path, gameFolder, newName );
-
+#if defined( _WIN32 )
 	// this gives atomic-delete-on-rename, like POSIX rename()
 	// There is a MoveFileTransacted() on vista and above, not sure if that means there
 	// is a race condition inside MoveFileEx...
@@ -1763,6 +1836,14 @@ bool idFileSystemLocal::RenameFile( const char * relativePath, const char * newN
 		const int err = GetLastError();
 		idLib::Warning( "RenameFile( %s, %s ) error %i", newOSPath.c_str(), oldOSPath.c_str(), err );
 	}
+#else
+	const bool success = ( rename( oldOSPath.c_str(), newOSPath.c_str() ) == 0 );
+
+	if ( !success ) {
+		const int err = errno;
+		idLib::Warning( "rename( %s, %s ) error %s", newOSPath.c_str(), oldOSPath.c_str(), strerror( errno ) );
+	}
+#endif // _WIN32
 	return success;
 }
 
@@ -2338,7 +2419,7 @@ void idFileSystemLocal::CreateCRCsForResourceFileList( const idFileList & list )
 		crcFilename.SetFileExtension( ".crc" );
 		std::auto_ptr<idFile> crcOutputFile( fileSystem->OpenFileWrite( crcFilename, "fs_basepath" ) );
 		if ( crcOutputFile.get() == NULL ) {
-			idLib::Printf( "Error writing CRC file %s.\n", crcFilename );
+			idLib::Printf( "Error writing CRC file %s.\n", crcFilename.c_str() );
 			continue;
 		}
 		

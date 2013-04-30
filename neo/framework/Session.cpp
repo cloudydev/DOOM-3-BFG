@@ -143,8 +143,8 @@ void idSessionLocal::Init() {
 	InitSteam();
 	ConstructSteamObjects();
 
-	signInManager = new idSignInManagerWin();
-	achievementSystem = new idAchievementSystemWin();
+	signInManager = new idSignInManagerNULL();
+	achievementSystem = new idAchievementSystemNULL();
 	achievementSystem->Init();
 	Initialize();
 

@@ -341,7 +341,7 @@ void idSoundSystemLocal::StopAllSounds() {
 	}
 	hardware.Update();
 }
-
+#if defined( _WIN32 )
 /*
 ========================
 idSoundSystemLocal::GetIXAudio2
@@ -350,7 +350,7 @@ idSoundSystemLocal::GetIXAudio2
 void * idSoundSystemLocal::GetIXAudio2() const {
 	return (void *)hardware.GetIXAudio2();
 }
-
+#endif // _WIN32
 /*
 ========================
 idSoundSystemLocal::SoundTime
