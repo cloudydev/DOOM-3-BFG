@@ -170,7 +170,10 @@ const idEventDef AI_TriggerFX( "triggerFX", "ss" );
 const idEventDef AI_StartEmitter( "startEmitter", "sss", 'e' ); 
 const idEventDef AI_GetEmitter( "getEmitter", "s", 'e' ); 
 const idEventDef AI_StopEmitter( "stopEmitter", "s" ); 
-
+// TODO: jeremiah sypult - why don't these AI_Vagary globals initialize in AI_Vagary.cpp?
+// ...is it a compiler bug in clang? something else?
+const idEventDef AI_Vagary_ChooseObjectToThrow( "vagary_ChooseObjectToThrow", "vvfff", 'e' );
+const idEventDef AI_Vagary_ThrowObjectAtEnemy( "vagary_ThrowObjectAtEnemy", "ef" );
 
 
 CLASS_DECLARATION( idActor, idAI )

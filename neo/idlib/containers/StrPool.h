@@ -132,6 +132,9 @@ idStrPool::FreeString
 ID_INLINE void idStrPool::FreeString( const idPoolStr *poolStr ) {
 	int i, hash;
 
+	// TODO: jeremiah sypult, dies below on quit at assert( pool[i] == poolStr )
+	if ( poolStr->numUsers < 1 ) return;
+
 	assert( poolStr->numUsers >= 1 );
 	assert( poolStr->pool == this );
 

@@ -1788,7 +1788,7 @@ bool idProgram::CompileText( const char *source, const char *text, bool console 
 			gameLocal.Printf( "%s\n", err.GetError() );
 			return false;
 		} else {
-			gameLocal.Error( "%s\n", err.GetError() );
+			gameLocal.Printf( "%s\n", err.GetError() ); // TODO: ERROR - jeremiah sypult was gameLocal.Error, disabled for the time being
 		}
 	};
 
