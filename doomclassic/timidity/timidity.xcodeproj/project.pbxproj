@@ -1,0 +1,318 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2721495B1714F2D000C05E0E /* common.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 272149411714F2D000C05E0E /* common.cpp */; };
+		2721495C1714F2D000C05E0E /* common.h in Headers */ = {isa = PBXBuildFile; fileRef = 272149421714F2D000C05E0E /* common.h */; };
+		2721495D1714F2D000C05E0E /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 272149431714F2D000C05E0E /* config.h */; };
+		2721495E1714F2D000C05E0E /* controls.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 272149441714F2D000C05E0E /* controls.cpp */; };
+		2721495F1714F2D000C05E0E /* controls.h in Headers */ = {isa = PBXBuildFile; fileRef = 272149451714F2D000C05E0E /* controls.h */; };
+		272149601714F2D000C05E0E /* filter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 272149461714F2D000C05E0E /* filter.cpp */; };
+		272149611714F2D000C05E0E /* filter.h in Headers */ = {isa = PBXBuildFile; fileRef = 272149471714F2D000C05E0E /* filter.h */; };
+		272149621714F2D000C05E0E /* instrum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 272149481714F2D000C05E0E /* instrum.cpp */; };
+		272149631714F2D000C05E0E /* instrum.h in Headers */ = {isa = PBXBuildFile; fileRef = 272149491714F2D000C05E0E /* instrum.h */; };
+		272149641714F2D000C05E0E /* mix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2721494A1714F2D000C05E0E /* mix.cpp */; };
+		272149651714F2D000C05E0E /* mix.h in Headers */ = {isa = PBXBuildFile; fileRef = 2721494B1714F2D000C05E0E /* mix.h */; };
+		272149661714F2D000C05E0E /* output.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2721494C1714F2D000C05E0E /* output.cpp */; };
+		272149671714F2D000C05E0E /* output.h in Headers */ = {isa = PBXBuildFile; fileRef = 2721494D1714F2D000C05E0E /* output.h */; };
+		272149681714F2D000C05E0E /* playmidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2721494E1714F2D000C05E0E /* playmidi.cpp */; };
+		272149691714F2D000C05E0E /* playmidi.h in Headers */ = {isa = PBXBuildFile; fileRef = 2721494F1714F2D000C05E0E /* playmidi.h */; };
+		2721496A1714F2D000C05E0E /* readmidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 272149501714F2D000C05E0E /* readmidi.cpp */; };
+		2721496B1714F2D000C05E0E /* readmidi.h in Headers */ = {isa = PBXBuildFile; fileRef = 272149511714F2D000C05E0E /* readmidi.h */; };
+		2721496C1714F2D000C05E0E /* resample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 272149521714F2D000C05E0E /* resample.cpp */; };
+		2721496D1714F2D000C05E0E /* resample.h in Headers */ = {isa = PBXBuildFile; fileRef = 272149531714F2D000C05E0E /* resample.h */; };
+		2721496E1714F2D000C05E0E /* sdl_a.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 272149541714F2D000C05E0E /* sdl_a.cpp */; };
+		2721496F1714F2D000C05E0E /* sdl_c.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 272149551714F2D000C05E0E /* sdl_c.cpp */; };
+		272149701714F2D000C05E0E /* structs.h in Headers */ = {isa = PBXBuildFile; fileRef = 272149561714F2D000C05E0E /* structs.h */; };
+		272149711714F2D000C05E0E /* tables.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 272149571714F2D000C05E0E /* tables.cpp */; };
+		272149721714F2D000C05E0E /* tables.h in Headers */ = {isa = PBXBuildFile; fileRef = 272149581714F2D000C05E0E /* tables.h */; };
+		272149731714F2D000C05E0E /* timidity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 272149591714F2D000C05E0E /* timidity.cpp */; };
+		272149741714F2D000C05E0E /* timidity.h in Headers */ = {isa = PBXBuildFile; fileRef = 2721495A1714F2D000C05E0E /* timidity.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		2721490017148C0100C05E0E /* timidity.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = timidity.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		272149411714F2D000C05E0E /* common.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = common.cpp; sourceTree = "<group>"; };
+		272149421714F2D000C05E0E /* common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = common.h; sourceTree = "<group>"; };
+		272149431714F2D000C05E0E /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
+		272149441714F2D000C05E0E /* controls.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = controls.cpp; sourceTree = "<group>"; };
+		272149451714F2D000C05E0E /* controls.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = controls.h; sourceTree = "<group>"; };
+		272149461714F2D000C05E0E /* filter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = filter.cpp; sourceTree = "<group>"; };
+		272149471714F2D000C05E0E /* filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filter.h; sourceTree = "<group>"; };
+		272149481714F2D000C05E0E /* instrum.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = instrum.cpp; sourceTree = "<group>"; };
+		272149491714F2D000C05E0E /* instrum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = instrum.h; sourceTree = "<group>"; };
+		2721494A1714F2D000C05E0E /* mix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mix.cpp; sourceTree = "<group>"; };
+		2721494B1714F2D000C05E0E /* mix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mix.h; sourceTree = "<group>"; };
+		2721494C1714F2D000C05E0E /* output.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = output.cpp; sourceTree = "<group>"; };
+		2721494D1714F2D000C05E0E /* output.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = output.h; sourceTree = "<group>"; };
+		2721494E1714F2D000C05E0E /* playmidi.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = playmidi.cpp; sourceTree = "<group>"; };
+		2721494F1714F2D000C05E0E /* playmidi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = playmidi.h; sourceTree = "<group>"; };
+		272149501714F2D000C05E0E /* readmidi.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = readmidi.cpp; sourceTree = "<group>"; };
+		272149511714F2D000C05E0E /* readmidi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = readmidi.h; sourceTree = "<group>"; };
+		272149521714F2D000C05E0E /* resample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = resample.cpp; sourceTree = "<group>"; };
+		272149531714F2D000C05E0E /* resample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = resample.h; sourceTree = "<group>"; };
+		272149541714F2D000C05E0E /* sdl_a.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sdl_a.cpp; sourceTree = "<group>"; };
+		272149551714F2D000C05E0E /* sdl_c.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sdl_c.cpp; sourceTree = "<group>"; };
+		272149561714F2D000C05E0E /* structs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = structs.h; sourceTree = "<group>"; };
+		272149571714F2D000C05E0E /* tables.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tables.cpp; sourceTree = "<group>"; };
+		272149581714F2D000C05E0E /* tables.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tables.h; sourceTree = "<group>"; };
+		272149591714F2D000C05E0E /* timidity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = timidity.cpp; sourceTree = "<group>"; };
+		2721495A1714F2D000C05E0E /* timidity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = timidity.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		272148FD17148C0100C05E0E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		272148F717148C0100C05E0E = {
+			isa = PBXGroup;
+			children = (
+				272149401714F2C200C05E0E /* timidity */,
+				2721490117148C0100C05E0E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		2721490117148C0100C05E0E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2721490017148C0100C05E0E /* timidity.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		272149401714F2C200C05E0E /* timidity */ = {
+			isa = PBXGroup;
+			children = (
+				272149411714F2D000C05E0E /* common.cpp */,
+				272149421714F2D000C05E0E /* common.h */,
+				272149431714F2D000C05E0E /* config.h */,
+				272149441714F2D000C05E0E /* controls.cpp */,
+				272149451714F2D000C05E0E /* controls.h */,
+				272149461714F2D000C05E0E /* filter.cpp */,
+				272149471714F2D000C05E0E /* filter.h */,
+				272149481714F2D000C05E0E /* instrum.cpp */,
+				272149491714F2D000C05E0E /* instrum.h */,
+				2721494A1714F2D000C05E0E /* mix.cpp */,
+				2721494B1714F2D000C05E0E /* mix.h */,
+				2721494C1714F2D000C05E0E /* output.cpp */,
+				2721494D1714F2D000C05E0E /* output.h */,
+				2721494E1714F2D000C05E0E /* playmidi.cpp */,
+				2721494F1714F2D000C05E0E /* playmidi.h */,
+				272149501714F2D000C05E0E /* readmidi.cpp */,
+				272149511714F2D000C05E0E /* readmidi.h */,
+				272149521714F2D000C05E0E /* resample.cpp */,
+				272149531714F2D000C05E0E /* resample.h */,
+				272149541714F2D000C05E0E /* sdl_a.cpp */,
+				272149551714F2D000C05E0E /* sdl_c.cpp */,
+				272149561714F2D000C05E0E /* structs.h */,
+				272149571714F2D000C05E0E /* tables.cpp */,
+				272149581714F2D000C05E0E /* tables.h */,
+				272149591714F2D000C05E0E /* timidity.cpp */,
+				2721495A1714F2D000C05E0E /* timidity.h */,
+			);
+			name = timidity;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		272148FE17148C0100C05E0E /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2721495C1714F2D000C05E0E /* common.h in Headers */,
+				2721495D1714F2D000C05E0E /* config.h in Headers */,
+				2721495F1714F2D000C05E0E /* controls.h in Headers */,
+				272149611714F2D000C05E0E /* filter.h in Headers */,
+				272149631714F2D000C05E0E /* instrum.h in Headers */,
+				272149651714F2D000C05E0E /* mix.h in Headers */,
+				272149671714F2D000C05E0E /* output.h in Headers */,
+				272149691714F2D000C05E0E /* playmidi.h in Headers */,
+				2721496B1714F2D000C05E0E /* readmidi.h in Headers */,
+				2721496D1714F2D000C05E0E /* resample.h in Headers */,
+				272149701714F2D000C05E0E /* structs.h in Headers */,
+				272149721714F2D000C05E0E /* tables.h in Headers */,
+				272149741714F2D000C05E0E /* timidity.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		272148FF17148C0100C05E0E /* timidity */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2721490417148C0100C05E0E /* Build configuration list for PBXNativeTarget "timidity" */;
+			buildPhases = (
+				272148FC17148C0100C05E0E /* Sources */,
+				272148FD17148C0100C05E0E /* Frameworks */,
+				272148FE17148C0100C05E0E /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = timidity;
+			productName = timidity;
+			productReference = 2721490017148C0100C05E0E /* timidity.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		272148F817148C0100C05E0E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = "id Software";
+			};
+			buildConfigurationList = 272148FB17148C0100C05E0E /* Build configuration list for PBXProject "timidity" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 272148F717148C0100C05E0E;
+			productRefGroup = 2721490117148C0100C05E0E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				272148FF17148C0100C05E0E /* timidity */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		272148FC17148C0100C05E0E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2721495B1714F2D000C05E0E /* common.cpp in Sources */,
+				2721495E1714F2D000C05E0E /* controls.cpp in Sources */,
+				272149601714F2D000C05E0E /* filter.cpp in Sources */,
+				272149621714F2D000C05E0E /* instrum.cpp in Sources */,
+				272149641714F2D000C05E0E /* mix.cpp in Sources */,
+				272149661714F2D000C05E0E /* output.cpp in Sources */,
+				272149681714F2D000C05E0E /* playmidi.cpp in Sources */,
+				2721496A1714F2D000C05E0E /* readmidi.cpp in Sources */,
+				2721496C1714F2D000C05E0E /* resample.cpp in Sources */,
+				2721496E1714F2D000C05E0E /* sdl_a.cpp in Sources */,
+				2721496F1714F2D000C05E0E /* sdl_c.cpp in Sources */,
+				272149711714F2D000C05E0E /* tables.cpp in Sources */,
+				272149731714F2D000C05E0E /* timidity.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		2721490217148C0100C05E0E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		2721490317148C0100C05E0E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		2721490517148C0100C05E0E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		2721490617148C0100C05E0E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		272148FB17148C0100C05E0E /* Build configuration list for PBXProject "timidity" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2721490217148C0100C05E0E /* Debug */,
+				2721490317148C0100C05E0E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2721490417148C0100C05E0E /* Build configuration list for PBXNativeTarget "timidity" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2721490517148C0100C05E0E /* Debug */,
+				2721490617148C0100C05E0E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 272148F817148C0100C05E0E /* Project object */;
+}
