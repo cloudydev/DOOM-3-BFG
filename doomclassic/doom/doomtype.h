@@ -41,5 +41,17 @@ typedef float FLOAT;
 
 
 
+#ifndef MININT
+#define MININT				INT32_MIN
+#endif
+
+#ifndef MAXINT
+#define MAXINT				INT32_MAX
+#endif
+
+#ifndef MAX_PATH
+#define MAX_PATH			PATH_MAX
+#endif
+
 
 #endif

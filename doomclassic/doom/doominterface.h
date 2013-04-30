@@ -31,6 +31,8 @@ If you have questions concerning this license or the applicable additional terms
 
 //#include "doomlib.h"
 
+#undef vsnprintf	// jeremiah sypult: conflicts with idLib
+#undef snprintf		// jeremiah sypult: conflicts with idLib
 #include <vector>
 #include <string>
 

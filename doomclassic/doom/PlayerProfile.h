@@ -29,7 +29,7 @@ If you have questions concerning this license or the applicable additional terms
 #define __PLAYERPROFILE_H__
 
 #include "Precompiled.h"
-#include "Serializer.h"
+#include "framework/Serializer.h"
 //#include "SaveGameManager.h"
 
 #define	MAX_PROFILE_SIZE			( 1024 * 1000 ) // High number for the key bindings
