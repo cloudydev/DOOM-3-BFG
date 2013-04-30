@@ -3,9 +3,9 @@ Doom 3 BFG Edition GPL Source Code - Mac OS X
 
 This file contains the following sections:
 
-MAC OS X NOTES
-GENERAL NOTES
-LICENSE
+1. MAC OS X NOTES
+2. GENERAL NOTES
+3. LICENSE
 
 MAC OS X NOTES
 ==============
