@@ -31,11 +31,64 @@ If you have questions concerning this license or the applicable additional terms
 /*
 ================================================================================================
 
+	Platform Specific ID_ Defines
+
+	The ID_ defines are the only platform defines we should be using.
+
+================================================================================================
+*/
+
+#undef ID_PC
+#undef ID_PC_WIN
+#undef ID_PC_WIN64
+#undef ID_CONSOLE
+#undef ID_WIN32
+#undef ID_LITTLE_ENDIAN
+
+#if defined(_WIN32)
+	// _WIN32 always defined
+	// _WIN64 also defined for x64 target
+/*
+	#if !defined( _MANAGED )
+		#if !defined( _WIN64 )
+			#define ID_WIN_X86_ASM
+			#define ID_WIN_X86_MMX_ASM
+			#define ID_WIN_X86_MMX_INTRIN
+			#define ID_WIN_X86_SSE_ASM
+			#define ID_WIN_X86_SSE_INTRIN
+			#define ID_WIN_X86_SSE2_ASM
+			#define ID_WIN_X86_SSE2_INTRIN
+			// the 32 bit build is now as close to the console builds as possible
+			#define ID_CONSOLE
+		#else
+			#define ID_PC_WIN64
+			#define ID_WIN_X86_MMX_INTRIN
+			#define ID_WIN_X86_SSE_INTRIN
+			#define ID_WIN_X86_SSE2_INTRIN
+			#define ID_WIN_X86_SSE3_INTRIN
+		#endif
+	#endif
+*/
+
+	#define ID_PC
+	#define ID_PC_WIN
+	#define ID_WIN32
+	#define ID_LITTLE_ENDIAN
+#else
+#error Unknown Platform
+#endif
+
+#define ID_OPENGL
+
+/*
+================================================================================================
+
 	PC Windows
 
 ================================================================================================
 */
-#if defined( _WIN32 )
+
+#ifdef ID_PC_WIN
 
 #define	CPUSTRING						"x86"
 
@@ -71,6 +124,33 @@ If you have questions concerning this license or the applicable additional terms
 	#define WIN32
 #endif
 
+#endif // ID_PC_WIN
+
+/*
+================================================================================================
+
+Defines and macros usable in all code
+
+================================================================================================
+*/
+
+#define ALIGN( x, a ) ( ( ( x ) + ((a)-1) ) & ~((a)-1) )
+
+#define _alloca16( x )					((void *)ALIGN( (UINT_PTR)_alloca( ALIGN( x, 16 ) + 16 ), 16 ) )
+#define _alloca128( x )					((void *)ALIGN( (UINT_PTR)_alloca( ALIGN( x, 128 ) + 128 ), 128 ) )
+
+#define likely( x )	( x )
+#define unlikely( x )	( x )
+
+// A macro to disallow the copy constructor and operator= functions
+// NOTE: The macro contains "private:" so all members defined after it will be private until
+// public: or protected: is specified.
+#define DISALLOW_COPY_AND_ASSIGN(TypeName)	\
+private:									\
+  TypeName(const TypeName&);				\
+  void operator=(const TypeName&);
+
+
 /*
 ================================================================================================
 Setup for /analyze code analysis, which we currently only have on the 360, but
@@ -84,6 +164,8 @@ This header should be included even by job code that doesn't reference the
 bulk of the codebase, so it is the best place for analyze pragmas.
 ================================================================================================
 */
+
+#if defined( ID_WIN32 )
 
 // disable some /analyze warnings here
 #pragma warning( disable: 6255 )	// warning C6255: _alloca indicates failure by raising a stack overflow exception. Consider using _malloca instead. (Note: _malloca requires _freea.)
@@ -112,6 +194,7 @@ bulk of the codebase, so it is the best place for analyze pragmas.
 // guaranteed to be false in the following code
 #define NO_RETURN __declspec(noreturn)
 
+#endif // ID_WIN32
 
 // I don't want to disable "warning C6031: Return value ignored" from /analyze
 // but there are several cases with sprintf where we pre-initialized the variables
@@ -122,8 +205,6 @@ bulk of the codebase, so it is the best place for analyze pragmas.
 // The volatile qualifier is to prevent:PVS-Studio warnings like:
 // False	2	4214	V519	The 'ignoredReturnValue' object is assigned values twice successively. Perhaps this is a mistake. Check lines: 545, 547.	Rage	collisionmodelmanager_debug.cpp	547	False
 extern volatile int ignoredReturnValue;
-
-#endif // _WIN32
 
 /*
 ================================================================================================
