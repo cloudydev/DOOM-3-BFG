@@ -414,7 +414,7 @@ idFileSystemLocal::OpenOSFile
 ================
 */
 idFileHandle idFileSystemLocal::OpenOSFile( const char *fileName, fsMode_t mode ) {
-#if defined( _WIN32 )
+#if defined( ID_PC_WIN )
 	idFileHandle fp = INVALID_HANDLE_VALUE;
 
 	DWORD dwAccess = 0;
@@ -491,7 +491,7 @@ idFileHandle idFileSystemLocal::OpenOSFile( const char *fileName, fsMode_t mode 
 			}
 		}
 	}
-#endif // _WIN32
+#endif // ID_PC_WIN
 
 	return fp;
 }
@@ -502,11 +502,11 @@ idFileSystemLocal::CloseOSFile
 ================
 */
 void idFileSystemLocal::CloseOSFile( idFileHandle o ) {
-#if defined( _WIN32 )
+#if defined( ID_PC_WIN )
 	::CloseHandle( o );
 #else
 	fclose( o );
-#endif // _WIN32
+#endif // ID_PC_WIN
 }
 
 /*
@@ -515,7 +515,7 @@ idFileSystemLocal::DirectFileLength
 ================
 */
 int idFileSystemLocal::DirectFileLength( idFileHandle o ) {
-#if defined( _WIN32 )
+#if defined( ID_PC_WIN )
 	return GetFileSize( o, NULL );
 #else
 	long pos = ftell( o );
@@ -524,7 +524,7 @@ int idFileSystemLocal::DirectFileLength( idFileHandle o ) {
 	fseek( o, pos, SEEK_SET );
 
 	return end;
-#endif // _WIN32
+#endif // ID_PC_WIN
 }
 
 /*
@@ -547,9 +547,9 @@ void idFileSystemLocal::CreateOSPath( const char *OSPath ) {
 	}
 
 	idStrStatic< MAX_OSPATH > path( OSPath );
-#if defined( _WIN32 )
+#if defined( ID_PC_WIN )
 	path.SlashesToBackSlashes();
-#endif // _WIN32
+#endif // ID_PC_WIN
 	for( ofs = &path[ 1 ]; *ofs ; ofs++ ) {
 		if ( *ofs == PATHSEPARATOR_CHAR ) {	
 			// create the directory
@@ -1615,19 +1615,19 @@ void idFileSystemLocal::RemoveFile( const char *relativePath ) {
 
 	if ( fs_basepath.GetString()[0] ) {
 		OSPath = BuildOSPath( fs_basepath.GetString(), gameFolder, relativePath );
-#if defined( _WIN32 )
+#if defined( ID_PC_WIN )
 		::DeleteFile( OSPath );
 #else
 		remove( OSPath );
-#endif // _WIN32
+#endif // ID_PC_WIN
 	}
 
 	OSPath = BuildOSPath( fs_savepath.GetString(), gameFolder, relativePath );
-#if defined( _WIN32 )
+#if defined( ID_PC_WIN )
 	::DeleteFile( OSPath );
 #else
 	remove( OSPath );
-#endif // _WIN32
+#endif // ID_PC_WIN
 }
 
 /*
@@ -1826,7 +1826,7 @@ bool idFileSystemLocal::RenameFile( const char * relativePath, const char * newN
 
 	idStr oldOSPath = BuildOSPath( path, gameFolder, relativePath );
 	idStr newOSPath = BuildOSPath( path, gameFolder, newName );
-#if defined( _WIN32 )
+#if defined( ID_PC_WIN )
 	// this gives atomic-delete-on-rename, like POSIX rename()
 	// There is a MoveFileTransacted() on vista and above, not sure if that means there
 	// is a race condition inside MoveFileEx...
@@ -1843,7 +1843,7 @@ bool idFileSystemLocal::RenameFile( const char * relativePath, const char * newN
 		const int err = errno;
 		idLib::Warning( "rename( %s, %s ) error %s", newOSPath.c_str(), oldOSPath.c_str(), strerror( errno ) );
 	}
-#endif // _WIN32
+#endif // ID_PC_WIN
 	return success;
 }
 

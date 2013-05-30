@@ -44,10 +44,10 @@ If you have questions concerning this license or the applicable additional terms
 #include "math/Math.h"
 #include "ParallelJobList.h"
 
-#if defined( _WIN32 )
+#if defined( ID_PC_WIN )
 #pragma warning( disable : 4100 )	// unreferenced formal parameter
 #pragma warning( disable : 4127 )	// conditional expression is constant
-#endif // _WIN32
+#endif // ID_PC_WIN
 
 #if _MSC_VER >= 1600
 #undef NULL

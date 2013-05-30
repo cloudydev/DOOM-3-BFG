@@ -348,7 +348,7 @@ idKeyInput::LocalizedKeyName
 ========================
 */
 const char * idKeyInput::LocalizedKeyName( keyNum_t keynum ) {
-#if defined( _WIN32 )
+#if defined( ID_PC_WIN )
 	if ( keynum < K_JOY1 ) {
 		// On the PC, we want to turn the scan code in to a key label that matches the currently selected keyboard layout
 		unsigned char keystate[256] = { 0 };
@@ -378,7 +378,7 @@ const char * idKeyInput::LocalizedKeyName( keyNum_t keynum ) {
 #else
 #warning implement idKeyInput::LocalizedKeyName
 	return KeyNumToString( keynum );
-#endif // _WIN32
+#endif // ID_PC_WIN
 }
 
 /*

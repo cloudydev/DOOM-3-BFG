@@ -531,11 +531,11 @@ void			Sys_ShowConsole( int visLevel, bool quitOnClose );
 
 // This really isn't the right place to have this, but since this is the 'top level' include
 // and has a function signature with 'FILE' in it, it kinda needs to be here =/
-#if defined( _WIN32 )
+#if defined( ID_PC_WIN )
 typedef HANDLE	idFileHandle;
 #else
 typedef FILE*	idFileHandle;
-#endif // _WIN32
+#endif // ID_PC_WIN
 
 ID_TIME_T		Sys_FileTimeStamp( idFileHandle fp );
 // NOTE: do we need to guarantee the same output on all platforms?

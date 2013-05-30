@@ -106,13 +106,13 @@ void idSignInManagerNULL::RegisterLocalUser( int inputDevice ) {
 	
 	if( idStr::Length( nameSource ) == 0 ) {
 		// ui_name was empty => default to hostname
-#if defined( _WIN32 )
+#if defined( ID_PC_WIN )
 		DWORD len = 128;
 		::GetComputerName( machineName, &len );
 #else
 		//gethostname( machineName, sizeof( machineName ) );
 		strncpy(machineName, getenv( "USER" ), sizeof( machineName ));
-#endif // _WIN32
+#endif // ID_PC_WIN
 		nameSource = machineName;
 	}
 	// DG end

@@ -155,11 +155,11 @@ void idCommonLocal::VPrintf( const char *fmt, va_list args ) {
 	}
 #endif
 	if ( !idLib::IsMainThread() ) {
-#if defined( _WIN32 )
+#if defined( ID_PC_WIN )
 		OutputDebugString( msg );
 #else
 		printf( "%s", msg );
-#endif // _WIN32
+#endif // ID_PC_WIN
 		return;
 	}
 
@@ -401,9 +401,9 @@ void idCommonLocal::DumpWarnings() {
 #ifndef ID_DEBUG
 		idStr	osPath;
 		osPath = fileSystem->RelativePathToOSPath( "warnings.txt", "fs_savepath" );
-#if defined( _WIN32 )
+#if defined( ID_PC_WIN )
 		WinExec( va( "Notepad.exe %s", osPath.c_str() ), SW_SHOW );
-#endif // _WIN32
+#endif // ID_PC_WIN
 #endif
 	}
 }

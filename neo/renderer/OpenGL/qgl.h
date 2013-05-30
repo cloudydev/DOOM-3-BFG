@@ -32,11 +32,11 @@ If you have questions concerning this license or the applicable additional terms
 #ifndef __QGL_H__
 #define __QGL_H__
 
-#if defined( _WIN32 )
+#if defined( ID_PC_WIN )
 #include <gl/gl.h>
-#endif // _WIN32
+#endif // ID_PC_WIN
 
-#if defined( __MACH__ )
+#if defined( ID_PC_OSX )
 // prohibit mac os x gl.h from loading glext.h
 #define GL_GLEXT_LEGACY
 #include <OpenGL/gl.h>
@@ -44,7 +44,7 @@ If you have questions concerning this license or the applicable additional terms
 //#define GL_DO_NOT_WARN_IF_MULTI_GL_VERSION_HEADERS_INCLUDED
 //#include <OpenGL/gl3.h>
 
-#endif // __MACH__
+#endif // ID_PC_OSX
 
 #ifndef APIENTRY
 #define APIENTRY
@@ -78,7 +78,7 @@ GLExtension_t GLimp_ExtensionPointer( const char *name );
 // TODO: figure out why glext.h does not define them? something to do with
 // various GL_VERSION_* and GL_ARB_* defines?
 //
-#if defined( __MACH__ )
+#if defined( ID_PC_OSX )
 
 #ifndef APIENTRYP
 #define APIENTRYP APIENTRY *
@@ -196,7 +196,7 @@ typedef GLuint (APIENTRYP PFNGLGETDEBUGMESSAGELOGARBPROC) (GLuint count, GLsizei
 
 typedef const GLubyte * (APIENTRYP PFNGLGETSTRINGIPROC) (GLenum name, GLuint index);
 
-#endif // __MACH__
+#endif // ID_PC_OSX
 
 // GL_EXT_direct_state_access
 extern PFNGLBINDMULTITEXTUREEXTPROC			qglBindMultiTextureEXT;
@@ -752,7 +752,7 @@ extern  void ( APIENTRY * qglVertex4sv )(const GLshort *v);
 extern  void ( APIENTRY * qglVertexPointer )(GLint size, GLenum type, GLsizei stride, const GLvoid *pointer);
 extern  void ( APIENTRY * qglViewport )(GLint x, GLint y, GLsizei width, GLsizei height);
 
-#if defined( _WIN32 )
+#if defined( ID_PC_WIN )
 
 extern  int   ( WINAPI * qwglChoosePixelFormat )(HDC, CONST PIXELFORMATDESCRIPTOR *);
 extern  int   ( WINAPI * qwglDescribePixelFormat) (HDC, int, UINT, LPPIXELFORMATDESCRIPTOR);
@@ -783,7 +783,7 @@ extern int  ( WINAPI * qwglGetLayerPaletteEntries)(HDC, int, int, int,
 extern BOOL ( WINAPI * qwglRealizeLayerPalette)(HDC, int, BOOL);
 extern BOOL ( WINAPI * qwglSwapLayerBuffers)(HDC, UINT);
 
-#endif // _WIN32
+#endif // ID_PC_WIN
 
 #endif // hardlink vs dlopen
 

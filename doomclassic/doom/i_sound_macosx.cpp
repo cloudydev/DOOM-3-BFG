@@ -70,27 +70,27 @@ If you have questions concerning this license or the applicable additional terms
 #define MIDI_FORMAT_BYTES	2
 #endif
 
-#if defined( _WIN32 )
+#if defined( ID_PC_WIN )
 IXAudio2SourceVoice*	pMusicSourceVoice;
-#endif // _WIN32
+#endif // ID_PC_WIN
 MidiSong*				doomMusic;
 byte*					musicBuffer;
 int						totalBufferSize;
 
-#if defined( _WIN32 )
+#if defined( ID_PC_WIN )
 HANDLE	hMusicThread;
-#endif // _WIN32
+#endif // ID_PC_WIN
 bool	waitingForMusic;
 bool	musicReady;
 
 
 typedef struct tagActiveSound_t {
-#if defined( _WIN32 )
+#if defined( ID_PC_WIN )
 	IXAudio2SourceVoice*     m_pSourceVoice;         // Source voice
 	X3DAUDIO_DSP_SETTINGS   m_DSPSettings;
 	X3DAUDIO_EMITTER        m_Emitter;
 	X3DAUDIO_CONE           m_Cone;
-#endif // _WIN32
+#endif // ID_PC_WIN
 	int id;
 	int valid;
 	int start;
@@ -133,11 +133,11 @@ float			g_EmitterAzimuths [] = { 0.f };
 static int		numOutputChannels = 0;
 static bool		soundHardwareInitialized = false;
 
-#if defined( _WIN32 )
+#if defined( ID_PC_WIN )
 X3DAUDIO_HANDLE					X3DAudioInstance;
 
 X3DAUDIO_LISTENER				doom_Listener;
-#endif // _WIN32
+#endif // ID_PC_WIN
 
 //float							localSoundVolumeEntries[] = { 0.f, 0.f, 0.9f, 0.5f, 0.f, 0.f };
 float							localSoundVolumeEntries[] = { 0.8f, 0.8f, 0.8f, 0.8f, 0.8f, 0.8f, 0.8f, 0.8f, 0.8f, 0.8f, 0.8f };
@@ -655,7 +655,7 @@ I_InitSoundChannel
 */
 void I_InitSoundChannel( int channel, int numOutputChannels_ ) {
 	activeSound_t	*soundchannel = &activeSounds[ channel ];
-#if defined( _WIN32 )
+#if defined( ID_PC_WIN )
 	X3DAUDIO_VECTOR ZeroVector = { 0.0f, 0.0f, 0.0f };
 
 	// Set up emitter parameters
@@ -708,7 +708,7 @@ void I_InitSoundChannel( int channel, int numOutputChannels_ ) {
     voiceFormat.cbSize = 0;
 
 	soundSystemLocal.hardware.GetIXAudio2()->CreateSourceVoice( &soundchannel->m_pSourceVoice, (WAVEFORMATEX *)&voiceFormat );
-#endif // _WIN32
+#endif // ID_PC_WIN
 }
 
 /*
@@ -720,7 +720,7 @@ void I_InitSound() {
 
 	if (S_initialized == 0) {
 		int i;
-#if defined( _WIN32 )
+#if defined( ID_PC_WIN )
 		X3DAUDIO_VECTOR ZeroVector = { 0.0f, 0.0f, 0.0f };
 
 		// Set up listener parameters
@@ -748,7 +748,7 @@ void I_InitSound() {
 				lengths[i] = lengths[(S_sfx[i].link - S_sfx)/sizeof(sfxinfo_t)];
 			}
 		}
-#endif // _WIN32
+#endif // ID_PC_WIN
 		S_initialized = 1;
 	}
 }
