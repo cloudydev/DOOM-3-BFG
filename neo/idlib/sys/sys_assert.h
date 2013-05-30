@@ -55,11 +55,11 @@ bool AssertFailed( const char *file, int line, const char *expression );
 // We have the code analysis tools on the 360 compiler,
 // so let it know what our asserts are.
 // The VS ultimate editions also get it on win32, but not x86
-#if defined( _WIN32 )
+#if defined( ID_PC_WIN )
 #define assert( x )		__analysis_assume( x ) ; idassert( x )
 #else
 #define assert( x )		idassert( x )
-#endif // _WIN32
+#endif // ID_PC_WIN
 #define verify( x )		( ( x ) ? true : ( AssertFailed( __FILE__, __LINE__, #x ), false ) )
 
 

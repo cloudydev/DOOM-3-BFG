@@ -1846,7 +1846,7 @@ or returns -1 on failure or if the buffer would be overflowed.
 int idStr::vsnPrintf( char *dest, int size, const char *fmt, va_list argptr ) {
 	int ret;
 
-#if defined( _WIN32 )
+#if defined( ID_PC_WIN )
 #undef _vsnprintf
 	ret = _vsnprintf( dest, size-1, fmt, argptr );
 #define _vsnprintf	use_idStr_vsnPrintf
@@ -1854,7 +1854,7 @@ int idStr::vsnPrintf( char *dest, int size, const char *fmt, va_list argptr ) {
 #undef vsnprintf
 	ret = vsnprintf( dest, size-1, fmt, argptr );
 #define vsnprintf	use_idStr_vsnPrintf
-#endif // _WIN32
+#endif // ID_PC_WIN
 	dest[size-1] = '\0';
 	if ( ret < 0 || ret >= size ) {
 		return -1;

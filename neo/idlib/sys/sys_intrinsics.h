@@ -97,7 +97,7 @@ ID_FORCE_INLINE void FlushCacheLine( const void * ptr, int offset ) {
 
 ID_INLINE void Prefetch( const void * ptr, int offset ) {}
 ID_INLINE void ZeroCacheLine( void * ptr, int offset ) {
-	byte * bytePtr = (byte *)( ( ( (UINT_PTR) ( ptr ) ) + ( offset ) ) & ~( CACHE_LINE_SIZE - 1 ) );
+	byte * bytePtr = (byte *)( ( ( (uintptr_t) ( ptr ) ) + ( offset ) ) & ~( CACHE_LINE_SIZE - 1 ) );
 	memset( bytePtr, 0, CACHE_LINE_SIZE );
 }
 ID_INLINE void FlushCacheLine( const void * ptr, int offset ) {}

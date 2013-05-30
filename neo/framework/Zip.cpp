@@ -1269,7 +1269,7 @@ idZipBuilder::GetFileTime
 ========================
 */
 bool idZipBuilder::GetFileTime( const idStr &filename, unsigned long *dostime ) const {
-#if defined( _WIN32 )
+#if defined( ID_PC_WIN )
 	{
 		FILETIME filetime;
 		WIN32_FIND_DATA fileData;
@@ -1284,7 +1284,7 @@ bool idZipBuilder::GetFileTime( const idStr &filename, unsigned long *dostime ) 
 	}
 #else
 #warning implement idZipBuilder::GetFileTime
-#endif // _WIN32
+#endif // ID_PC_WIN
 	return false;
 }
 

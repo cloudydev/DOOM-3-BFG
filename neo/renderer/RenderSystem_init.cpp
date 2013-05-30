@@ -31,10 +31,10 @@ If you have questions concerning this license or the applicable additional terms
 
 #include "tr_local.h"
 
-#if defined( _WIN32 )
+#if defined( ID_PC_WIN )
 // Vista OpenGL wrapper check
 #include "../sys/win32/win_local.h"
-#endif // _WIN32
+#endif // ID_PC_WIN
 
 // DeviceContext bypasses RenderSystem to work directly with this
 idGuiModel * tr_guiModel;
@@ -341,12 +341,12 @@ For ARB_debug_output
 static void CALLBACK DebugCallback(unsigned int source, unsigned int type,
 								   unsigned int id, unsigned int severity, int length, const char * message, void * userParam) {
 	// it probably isn't safe to do an idLib::Printf at this point
-#if defined( _WIN32 )
+#if defined( ID_PC_WIN )
 	OutputDebugString( message );
 	OutputDebugString( "\n" );
 #else
 	printf( "%s\n", message );
-#endif // _WIN32
+#endif // ID_PC_WIN
 }
 
 /*
@@ -845,7 +845,7 @@ void R_InitOpenGL() {
 
 	// Reset our gamma
 	R_SetColorMappings();
-#if defined( _WIN32 )
+#if defined( ID_PC_WIN )
 	static bool glCheck = false;
 	if ( !glCheck && win32.osversion.dwMajorVersion == 6 ) {
 		glCheck = true;
@@ -867,7 +867,7 @@ void R_InitOpenGL() {
 	}
 #else
 #warning implement glCheck
-#endif // _WIN32
+#endif // ID_PC_WIN
 }
 
 /*
@@ -1661,7 +1661,7 @@ void GfxInfo_f( const idCmdArgs &args ) {
 
 	common->Printf( "-------\n" );
 
-#if defined( _WIN32 )
+#if defined( ID_PC_WIN )
 	// WGL_EXT_swap_interval
 	typedef bool (WINAPI * PFNWGLSWAPINTERVALEXTPROC) (int interval);
 	//extern	PFNWGLSWAPINTERVALEXTPROC wglSwapIntervalEXT;
@@ -1671,7 +1671,7 @@ void GfxInfo_f( const idCmdArgs &args ) {
 	} else {
 		common->Printf( "swapInterval not forced\n" );
 	}
-#endif // _WIN32
+#endif // ID_PC_WIN
 
 	if ( glConfig.stereoPixelFormatAvailable && glConfig.isStereoPixelFormat ) {
 		idLib::Printf( "OpenGl quad buffer stereo pixel format active\n" );

@@ -37,7 +37,7 @@ If you have questions concerning this license or the applicable additional terms
 
 ================================================================================================
 */
-#if defined( _WIN32 )
+#if defined( ID_PC_WIN )
 
 #define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS	// prevent auto literal to string conversion
 
@@ -71,7 +71,7 @@ If you have questions concerning this license or the applicable additional terms
 #include <windows.h>						// for qgl.h
 #undef FindText								// fix namespace pollution
 
-#endif // _WIN32
+#endif // ID_PC_WIN
 
 /*
 ================================================================================================
@@ -80,7 +80,7 @@ If you have questions concerning this license or the applicable additional terms
 
 ================================================================================================
 */
-#if defined( __MACH__ )
+#if defined( ID_PC_OSX )
 
 #ifndef _D3SDK
 #ifndef GAME_DLL
@@ -110,7 +110,7 @@ If you have questions concerning this license or the applicable additional terms
 #include <sys/time.h>
 #include <mach/mach_time.h>
 
-#endif // __MACH__
+#endif // ID_PC_OSX
 
 /*
 ================================================================================================

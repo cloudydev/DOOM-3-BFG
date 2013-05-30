@@ -30,13 +30,13 @@ If you have questions concerning this license or the applicable additional terms
 #undef private
 #undef protected
 
-#if defined( _WIN32 )
+#if defined( ID_PC_WIN )
 #include "win32/win_achievements.h"
 #include "win32/win_signin.h"
 #else
 #include "null/null_achievements.h"
 #include "null/null_signin.h"
-#endif // _WIN32
+#endif // ID_PC_WIN
 
 #include "sys_lobby_backend.h"
 #include "sys_lobby.h"

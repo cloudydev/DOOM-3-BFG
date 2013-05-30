@@ -125,7 +125,7 @@ idSIMDProcessor *p_simd;
 idSIMDProcessor *p_generic;
 long baseClocks = 0;
 
-#if defined( _WIN32 )
+#if defined( ID_PC_WIN )
 #define TIME_TYPE int
 
 #pragma warning(disable : 4731)     // frame pointer register 'ebx' modified by inline assembly code
@@ -150,9 +150,9 @@ long saved_ebx = 0;
 	__asm xor eax, eax						\
 	__asm cpuid
 
-#endif // _WIN32
+#endif // ID_PC_WIN
 
-#if defined( __MACH__ )
+#if defined( ID_PC_OSX )
 #define TIME_TYPE uint64_t
 
 #define StartRecordTime( start )			\
@@ -161,7 +161,7 @@ long saved_ebx = 0;
 #define StopRecordTime( end )				\
 	end = (int)mach_absolute_time();
 
-#endif // __MACH__
+#endif // ID_PC_OSX
 
 #define GetBest( start, end, best )			\
 	if ( !best || end - start < best ) {	\
@@ -1226,11 +1226,11 @@ idSIMD::Test_f
 ============
 */
 void idSIMD::Test_f( const idCmdArgs &args ) {
-#if defined( _WIN32 )
+#if defined( ID_PC_WIN )
 	SetThreadPriority( GetCurrentThread(), THREAD_PRIORITY_TIME_CRITICAL );
 #else
 #warning implement thread priority?
-#endif // _WIN32
+#endif // ID_PC_WIN
 	p_simd = processor;
 	p_generic = generic;
 
@@ -1281,9 +1281,9 @@ void idSIMD::Test_f( const idCmdArgs &args ) {
 	}
 	p_simd = NULL;
 	p_generic = NULL;
-#if defined( _WIN32 )
+#if defined( ID_PC_WIN )
 	SetThreadPriority( GetCurrentThread(), THREAD_PRIORITY_NORMAL );
 #else
 #warning implement thread priority?
-#endif // _WIN32
+#endif // ID_PC_WIN
 }

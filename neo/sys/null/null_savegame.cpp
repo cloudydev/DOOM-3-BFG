@@ -40,17 +40,17 @@ extern idCVar savegame_error;
 #define SAVEGAME_SENTINAL				0x12358932
 
 // RB begin
-#ifndef _WIN32 // DG: unify win32 and posix savegames
+#ifndef ID_PC_WIN // DG: unify win32 and posix savegames
 #define ERROR_SUCCESS	0
 #endif
 // RB end
 
 static ID_FORCE_INLINE char * savegameError( void ) {
-#if defined( _WIN32 )
+#if defined( ID_PC_WIN )
 	return GetLastError();
 #else
 	return strerror( errno );
-#endif // _WIN32
+#endif // ID_PC_WIN
 }
 
 /*
@@ -412,7 +412,7 @@ int idSaveGameThread::Enumerate()
 						ret = -1;
 					}
 				}
-#if defined( _WIN32 )
+#if defined( ID_PC_WIN )
 				// Use the date from the directory
 				WIN32_FILE_ATTRIBUTE_DATA attrData;
 				BOOL attrRet = GetFileAttributesEx( file->GetFullPath(), GetFileExInfoStandard, &attrData );
@@ -437,7 +437,7 @@ int idSaveGameThread::Enumerate()
 				}
 #else
 				details->date = file->Timestamp();
-#endif // _WIN32
+#endif // ID_PC_WIN
 			} else {
 				details->damaged = true;
 			}

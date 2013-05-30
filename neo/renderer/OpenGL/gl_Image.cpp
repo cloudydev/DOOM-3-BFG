@@ -424,7 +424,7 @@ void idImage::AllocImage() {
 				// As of 2011-10-6 using NVIDIA hardware and drivers we have to allocate the memory with HeapAlloc
 				// with the exact size otherwise large image allocation (for instance for physical page textures)
 				// may fail on Vista 32-bit.
-#if defined( _WIN32 )
+#if defined( ID_PC_WIN )
 				void * data = HeapAlloc( GetProcessHeap(), 0, compressedSize );
 				qglCompressedTexImage2DARB( uploadTarget+side, level, internalFormat, w, h, 0, compressedSize, data );
 				if ( data != NULL ) {
@@ -436,7 +436,7 @@ void idImage::AllocImage() {
 				if( data != NULL ) {
 					Mem_Free( data );
 				}
-#endif // _WIN32
+#endif // ID_PC_WIN
 			} else {
 				qglTexImage2D( uploadTarget + side, level, internalFormat, w, h, 0, dataFormat, dataType, NULL );
 			}

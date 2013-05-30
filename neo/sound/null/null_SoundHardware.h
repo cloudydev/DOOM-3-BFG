@@ -69,10 +69,10 @@ public:
 
 	idSoundVoice *	AllocateVoice( const idSoundSample * leadinSample, const idSoundSample * loopingSample );
 	void			FreeVoice( idSoundVoice * voice );
-#if defined( _WIN32 )
+#if defined( ID_PC_WIN )
 	// video playback needs this
 	IXAudio2 *		GetIXAudio2() const { return pXAudio2; };
-#endif // _WIN32
+#endif // ID_PC_WIN
 	int				GetNumZombieVoices() const { return zombieVoices.Num(); }
 	int				GetNumFreeVoices() const { return freeVoices.Num(); }
 

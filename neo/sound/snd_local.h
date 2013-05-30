@@ -79,7 +79,7 @@ typedef enum {
 
 #include "SoundVoice.h"
 
-#if defined( _WIN32 )
+#if defined( ID_PC_WIN )
 
 #define OPERATION_SET 1
 
@@ -100,7 +100,7 @@ typedef enum {
 #include "null/null_SoundVoice.h"
 #include "null/null_SoundHardware.h"
 
-#endif // _WIN32
+#endif // ID_PC_WIN
 
 
 //------------------------
@@ -404,9 +404,9 @@ public:
 
 	virtual void			InitStreamBuffers();
 	virtual void			FreeStreamBuffers();
-#if defined( _WIN32 )
+#if defined( ID_PC_WIN )
 	virtual void *			GetIXAudio2() const;
-#endif // _WIN32
+#endif // ID_PC_WIN
 	// for the sound level meter window
 	virtual cinData_t		ImageForTime( const int milliseconds, const bool waveform );
 
@@ -445,13 +445,13 @@ public:
 			sample( NULL ),
 			bufferNumber( 0 )
 		{ }
-#if defined( _WIN32 )
+#if defined( ID_PC_WIN )
 		idSoundVoice_XAudio2 *		voice;
 		idSoundSample_XAudio2 *		sample;
 #else
 		idSoundVoice_NULL *			voice;
 		idSoundSample_NULL *		sample;
-#endif // _WIN32
+#endif // ID_PC_WIN
 		int							bufferNumber;
 	};
 

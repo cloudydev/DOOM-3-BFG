@@ -35,7 +35,7 @@ If you have questions concerning this license or the applicable additional terms
 #include <pthread_ng.h>
 #endif // __FreeBSD__
 
-#if defined( __MACH__ )
+#if defined( ID_PC_OSX )
 //#include <pthread.h>
 static int clock_gettime(int clk_id, struct timespec* t) {
     struct timeval now;
@@ -45,7 +45,7 @@ static int clock_gettime(int clk_id, struct timespec* t) {
     t->tv_nsec = now.tv_usec * 1000;
     return 0;
 }
-#endif // __MACH__
+#endif // ID_PC_OSX
 
 /*
 ================================================================================================
@@ -149,11 +149,11 @@ Sys_Yield
 ========================
 */
 void Sys_Yield() {
-#if defined( __MACH__ )
+#if defined( ID_PC_OSX )
 	sched_yield();
 #else
 	pthread_yield();
-#endif // __MACH__
+#endif // ID_PC_OSX
 }
 
 /*
